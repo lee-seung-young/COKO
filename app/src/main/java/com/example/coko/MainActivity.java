@@ -5,6 +5,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,12 +17,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
+import com.skt.Tmap.TMapMarkerItem;
+import com.skt.Tmap.TMapPOIItem;
+import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
+
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import static com.skt.Tmap.TMapMarkerItem.*;
 
 public class MainActivity extends AppCompatActivity {
     TMapView tmap;
-
+    final ArrayList alTMapPoint = new ArrayList();
+    TMapData tmapdata=new TMapData();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tmap.setSKTMapApiKey("l7xx84f4860b8e1b4a5a92b716682a24c0b8");
         linearLayoutTmap.addView(tmap);
         tmap.setIconVisibility(true); //현재위치로 표시될 아이콘을 표시할지 여부 설정
+
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
 
@@ -45,6 +63,29 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 setGps();
+        alTMapPoint.add(new TMapPoint(37.576016,126.976867)); //광화문
+        alTMapPoint.add(new TMapPoint(37.570432, 126.992169)); //종로3가
+        alTMapPoint.add(new TMapPoint(37.321232,127.128381)); //단국대
+        //마커 이미지 생성
+        final Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.pin);
+        for(int i=0;i<3;i++){
+            TMapMarkerItem markerItem1=new TMapMarkerItem();
+            //마커 아이콘 지정
+            markerItem1.setTMapPoint((TMapPoint) alTMapPoint.get(i));
+            //지도에 마커 추가
+            tmap.addMarkerItem("markerItem"+i,markerItem1);
+        }
+        /*자동차 경로 안내 : 출발지 위치 좌표 & 도착지 위치 좌표 사용 */
+        /* 현재 위치 좌표 반환*/
+        TMapPoint tpoint = tmap.getLocationPoint();
+        double Latitude=tpoint.getLatitude();
+        double Longitude=tpoint.getLongitude();
+
+        /*출발, 목적지 값으로 경로탐색을 요청*/
+        //TMapPoint startpoint=new TMapPoint(Latitude,Longitude);
+        //TMapPoint endpoint= new TMapPoint(37.321232,127.128381);
+        //TMapPolyLine polyline = tmapdata.findPathData(startpoint,endpoint); 안돌아감
+
     }
     private final LocationListener mLocationListener = new LocationListener(){
         public void onLocationChanged(Location location){
@@ -79,4 +120,5 @@ setGps();
                1, //통지사이의 최소 변경 거리 (m)
                mLocationListener);
     }
+
 }
