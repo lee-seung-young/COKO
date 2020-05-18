@@ -20,6 +20,10 @@
         "source": "C:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_launcher_background.png"
     },
     {
+        "merged": "C:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable_pin.png.flat",
+        "source": "C:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\src\\main\\res\\drawable\\pin.png"
+    },
+    {
         "merged": "C:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_background.png.flat",
         "source": "C:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_background.png"
     },
