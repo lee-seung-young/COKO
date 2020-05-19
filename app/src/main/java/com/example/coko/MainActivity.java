@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         tmap.setIconVisibility(true); //현재위치로 표시될 아이콘을 표시할지 여부 설정
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-
+                ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+        {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1); //위치권한 탐색 허용 관련 내용
             }
@@ -64,8 +64,15 @@ public class MainActivity extends AppCompatActivity {
         }
 setGps();
         alTMapPoint.add(new TMapPoint(37.576016,126.976867)); //광화문
-        alTMapPoint.add(new TMapPoint(37.570432, 126.992169)); //종로3가
+        alTMapPoint.add(new TMapPoint(37.2844, 127.1052)); //남한산성
         alTMapPoint.add(new TMapPoint(37.321232,127.128381)); //단국대
+        //alTMapPoint.add(new TMapPoint(35.175804,129.043426)); //삼광사
+        //alTMapPoint.add(new TMapPoint(33.458771,126.942672)); //성산 일출봉
+        //alTMapPoint.add(new TMapPoint(36.496896,126.335286)); //꽃지해수욕장
+        //alTMapPoint.add(new TMapPoint(34.727673,127.894119)); //남해 가천 다랭이 마을
+        //alTMapPoint.add(new TMapPoint(35.147823,129.130080)); //부산 광안대교
+        //alTMapPoint.add(new TMapPoint(38.119597,128.465550)); //설악산
+        //alTMapPoint.add(new TMapPoint(37.582978,126.983661)); //북촌한옥마을
         //마커 이미지 생성
         final Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.pin);
         for(int i=0;i<3;i++){
@@ -76,15 +83,20 @@ setGps();
             tmap.addMarkerItem("markerItem"+i,markerItem1);
         }
         /*자동차 경로 안내 : 출발지 위치 좌표 & 도착지 위치 좌표 사용 */
-        /* 현재 위치 좌표 반환*/
+        /* 현재 위치 좌표 반환 (지금 내가 있는 좌표가 아니라 SKT 타워로 나옴!! 수정해야됨**)*/
         TMapPoint tpoint = tmap.getLocationPoint();
         double Latitude=tpoint.getLatitude();
         double Longitude=tpoint.getLongitude();
 
-        /*출발, 목적지 값으로 경로탐색을 요청*/
-        //TMapPoint startpoint=new TMapPoint(Latitude,Longitude);
-        //TMapPoint endpoint= new TMapPoint(37.321232,127.128381);
-        //TMapPolyLine polyline = tmapdata.findPathData(startpoint,endpoint); 안돌아감
+        TMapPoint tMapPointStart=new TMapPoint(Latitude,Longitude);
+        TMapPoint tMapPointEnd=new TMapPoint(37.321232,127.128381); //단국대
+        /*출발, 목적지 값으로 경로탐색을 요청, 경로 그림*/
+        tmapdata.findPathData(tMapPointStart, tMapPointEnd, new TMapData.FindPathDataListenerCallback() {
+            @Override
+            public void onFindPathData(TMapPolyLine polyLine) {
+                tmap.addTMapPath(polyLine);
+            }
+        });
 
     }
     private final LocationListener mLocationListener = new LocationListener(){
