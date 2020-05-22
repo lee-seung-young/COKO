@@ -778,9 +778,9 @@ int id italic 0x7f070063
 int id left 0x7f070064
 int id line1 0x7f070065
 int id line3 0x7f070066
-int id linearLayoutTmap 0x7f070067
-int id listMode 0x7f070068
-int id list_item 0x7f070069
+int id listMode 0x7f070067
+int id list_item 0x7f070068
+int id mapview 0x7f070069
 int id message 0x7f07006a
 int id middle 0x7f07006b
 int id multiply 0x7f07006c
