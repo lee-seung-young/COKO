@@ -742,6 +742,7 @@ id barrier
 id beginning
 id blocking
 id bottom
+id btn_map
 id buttonPanel
 id center_vertical
 id chains
@@ -900,6 +901,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
+layout activity_map
 layout custom_dialog
 layout notification_action
 layout notification_action_tombstone
