@@ -238,5 +238,5 @@ public class MainActivity extends AppCompatActivity
 //               1, //통지사이의 최소 변경 거리 (m)
 //               mLocationListener);
 //    }
-
+//
 //}

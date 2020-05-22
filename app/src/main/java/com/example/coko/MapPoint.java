@@ -40,3 +40,4 @@ public class MapPoint {
         this.longitude=longitude;
     }
 }
+//
