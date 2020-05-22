@@ -7,9 +7,11 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-    <LinearLayout
-       android:id="@+id/mapview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        <Button
+            android:id="@+id/btn_map"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:text="지도 보기"
+            android:textSize="@android:dimen/app_icon_size" />
+
     </android.widget.LinearLayout>
