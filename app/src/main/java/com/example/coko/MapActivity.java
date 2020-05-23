@@ -1,8 +1,10 @@
 package com.example.coko;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -33,7 +35,7 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
 
     @Override
-    public void onLocationChange(Location location) {
+    public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
         }
@@ -81,8 +83,21 @@ public class MapActivity extends AppCompatActivity
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                Toast.makeText(MapActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+               //
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("필요한 항목을 선택하시오.")
+                        .setCancelable(false)
+                        .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+
+                        })
+                        .show();
+                        
             }
+
         });
 
     }
@@ -119,7 +134,7 @@ public class MapActivity extends AppCompatActivity
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(m_mapPoint.get(i).getName());
-            //item1.setCalloutSubTitle("  "); => sub title 생성
+            // item1.setCalloutSubTitle( ); sub title 생성
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(true);
 
@@ -134,6 +149,9 @@ public class MapActivity extends AppCompatActivity
 
         }
     }
+
+
+
     //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
 //        tmap.setSKTMapApiKey("l7xx84f4860b8e1b4a5a92b716682a24c0b8");
