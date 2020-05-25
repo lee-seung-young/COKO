@@ -90,7 +90,7 @@ public class MapActivity extends AppCompatActivity
                         .setCancelable(false)
                         .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-//일단 로컬 브랜치 설정
+//2:35분
                             }
 
                         })
