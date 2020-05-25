@@ -12,9 +12,12 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
@@ -39,6 +42,8 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
     double gpsLatitude;
     double gpsLongitude;
+    private Button btn_map;
+    TMapData tmapdata=null;
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -116,6 +121,14 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
+        btn_map=findViewById(R.id.btn_map);
+        btn_map.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent=new Intent(MapActivity.this,MapActivity.class);
+                GetCarPath(new TMapPoint(gpsLatitude,gpsLongitude),new TMapPoint(38.079666, 128.447609));
+            }
+        });
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
@@ -128,7 +141,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint("꽃지해수욕장", 36.496896, 126.335286));
         m_mapPoint.add(new MapPoint("남해 가천 다랭이 마을", 34.727673, 127.894119));
         m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
-        m_mapPoint.add(new MapPoint("설악산", 38.119597, 128.465550));
+        m_mapPoint.add(new MapPoint("설악산", 38.079666, 128.447609));
         m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
         m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
     }
@@ -165,6 +178,15 @@ public class MapActivity extends AppCompatActivity
             mArrayMarkerID.add(strID);
 
         }
+    }
+    void GetCarPath(TMapPoint startPoint,TMapPoint endPoint){
+    tmapdata=new TMapData();
+    tmapdata.findPathData(startPoint, endPoint,new TMapData.FindPathDataListenerCallback() {
+            @Override
+            public void onFindPathData(TMapPolyLine polyLine) {
+                tMapView.addTMapPath(polyLine);
+            }
+        });
     }
 
 
