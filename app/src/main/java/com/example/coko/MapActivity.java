@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -57,13 +58,13 @@ public class MapActivity extends AppCompatActivity
         showMarkerPoint();
 
         /* 현재 보는 방향 */
-        tMapView.setCompassMode(true);
+        //tMapView.setCompassMode(true);
 
         /*현위치 아이콘표시*/
         tMapView.setIconVisibility(true);
 
         /*줌레벨*/
-        tMapView.setZoomLevel(15);
+        tMapView.setZoomLevel(13);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
@@ -79,20 +80,23 @@ public class MapActivity extends AppCompatActivity
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
 
-        //풍선에서 우측 버튼 클릭시 할 행동
+        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                //Toast.makeText(MapActivity.this, "클릭", Toast.LENGTH_SHORT).show();
-               //
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("필요한 항목을 선택하시오.")
-                        .setCancelable(false)
+                        .setCancelable(true)
                         .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-//2:35분
+                                Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+                                startActivity(intent);
                             }
-
+                        })
+                        .setNegativeButton("찜하기", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
+                            }
                         })
                         .show();
                         
@@ -138,7 +142,7 @@ public class MapActivity extends AppCompatActivity
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(true);
 
-            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
+            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
 
             item1.setCalloutRightButtonImage(bitmap_i);
 
