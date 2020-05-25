@@ -10,12 +10,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -34,11 +37,16 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
+    double gpsLatitude;
+    double gpsLongitude;
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
+            TMapPoint pointh = tMapView.getLocationPoint();
+            gpsLatitude = pointh.getLatitude();
+            gpsLongitude = pointh.getLongitude();
         }
     }
 
@@ -69,12 +77,17 @@ public class MapActivity extends AppCompatActivity
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
         tmapgps = new TMapGpsManager(MapActivity.this);
-        tmapgps.setMinTime(1000);
+        tmapgps.setMinTime(0);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
         // 실내일 때 유용
         //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
+
+        /*
+        getDistance distance = new getDistance();
+        double result = distance.getDistance(gpsLatitude, gpsLongitude, 37.2844, 127.1052);
+      */
 
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
@@ -103,7 +116,6 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
-
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
@@ -118,6 +130,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
         m_mapPoint.add(new MapPoint("설악산", 38.119597, 128.465550));
         m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
+        m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
     }
 
     public void showMarkerPoint() { //마커 찍는거
