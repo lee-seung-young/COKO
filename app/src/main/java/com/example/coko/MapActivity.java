@@ -121,11 +121,12 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
+        /*버튼 생성 및 버튼 누르면 차로 목적지까지 가는 경로 보여줌*/
         btn_map=findViewById(R.id.btn_map);
         btn_map.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent=new Intent(MapActivity.this,MapActivity.class);
+                //Intent intent=new Intent(MapActivity.this,MapActivity.class);
                 GetCarPath(new TMapPoint(gpsLatitude,gpsLongitude),new TMapPoint(38.079666, 128.447609));
             }
         });
@@ -179,6 +180,7 @@ public class MapActivity extends AppCompatActivity
 
         }
     }
+    /*차로가는 경로 보여주는 함수*/
     void GetCarPath(TMapPoint startPoint,TMapPoint endPoint){
     tmapdata=new TMapData();
     tmapdata.findPathData(startPoint, endPoint,new TMapData.FindPathDataListenerCallback() {
