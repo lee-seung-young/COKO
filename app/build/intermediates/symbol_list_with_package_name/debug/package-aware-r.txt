@@ -661,6 +661,7 @@ drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable impo1
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -900,6 +901,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_info
 layout activity_main
 layout activity_map
 layout custom_dialog

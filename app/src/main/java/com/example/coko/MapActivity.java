@@ -1,18 +1,24 @@
 package com.example.coko;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -31,11 +37,16 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
+    double gpsLatitude;
+    double gpsLongitude;
 
     @Override
-    public void onLocationChange(Location location) {
+    public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
+            TMapPoint pointh = tMapView.getLocationPoint();
+            gpsLatitude = pointh.getLatitude();
+            gpsLongitude = pointh.getLongitude();
         }
     }
 
@@ -55,36 +66,56 @@ public class MapActivity extends AppCompatActivity
         showMarkerPoint();
 
         /* 현재 보는 방향 */
-        tMapView.setCompassMode(true);
+        //tMapView.setCompassMode(true);
 
         /*현위치 아이콘표시*/
         tMapView.setIconVisibility(true);
 
         /*줌레벨*/
-        tMapView.setZoomLevel(15);
+        tMapView.setZoomLevel(13);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
         tmapgps = new TMapGpsManager(MapActivity.this);
-        tmapgps.setMinTime(1000);
+        tmapgps.setMinTime(0);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
         // 실내일 때 유용
         //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
 
+        /*
+        getDistance distance = new getDistance();
+        double result = distance.getDistance(gpsLatitude, gpsLongitude, 37.2844, 127.1052);
+      */
+
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
 
-        //풍선에서 우측 버튼 클릭시 할 행동
+        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                Toast.makeText(MapActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("필요한 항목을 선택하시오.")
+                        .setCancelable(true)
+                        .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("찜하기", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
+                            }
+                        })
+                        .show();
+                        
             }
-        });
 
+        });
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
@@ -99,6 +130,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
         m_mapPoint.add(new MapPoint("설악산", 38.119597, 128.465550));
         m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
+        m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
     }
 
     public void showMarkerPoint() { //마커 찍는거
@@ -119,11 +151,11 @@ public class MapActivity extends AppCompatActivity
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(m_mapPoint.get(i).getName());
-            //item1.setCalloutSubTitle("  "); => sub title 생성
+            // item1.setCalloutSubTitle( ); sub title 생성
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(true);
 
-            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
+            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
 
             item1.setCalloutRightButtonImage(bitmap_i);
 
@@ -134,6 +166,9 @@ public class MapActivity extends AppCompatActivity
 
         }
     }
+
+
+
     //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
 //        tmap.setSKTMapApiKey("l7xx84f4860b8e1b4a5a92b716682a24c0b8");
