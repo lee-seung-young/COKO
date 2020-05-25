@@ -37,6 +37,7 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
+
     double gpsLatitude;
     double gpsLongitude;
 
@@ -44,7 +45,7 @@ public class MapActivity extends AppCompatActivity
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-            TMapPoint pointh = tMapView.getLocationPoint();
+            TMapPoint pointh = tMapView.getLocationPoint(); //현재 위치 좌표 받아 오기,  gpsLatitude, gpsLongitude 각각 위도, 경도
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
         }
@@ -65,7 +66,7 @@ public class MapActivity extends AppCompatActivity
         addPoint();
         showMarkerPoint();
 
-        /* 현재 보는 방향 */
+        /* 현재 보는 방향 모드 */
         //tMapView.setCompassMode(true);
 
         /*현위치 아이콘표시*/
@@ -77,17 +78,13 @@ public class MapActivity extends AppCompatActivity
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
         tmapgps = new TMapGpsManager(MapActivity.this);
-        tmapgps.setMinTime(0);
+        tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
         // 실내일 때 유용
         //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
 
-        /*
-        getDistance distance = new getDistance();
-        double result = distance.getDistance(gpsLatitude, gpsLongitude, 37.2844, 127.1052);
-      */
 
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
@@ -116,13 +113,19 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
+
+        // 거리 구하는 함수 사용 , 현재위치 위도, 경도, 목적지 위도, 경도
+        getDistance distance = new getDistance();
+        double dtresult = distance.getDistance(gpsLatitude, gpsLongitude, 37.321232, 127.128381); //거리 비교 값 dtresult에 저장
+        Log.v("거리",toString().valueOf(dtresult)); // 저장된 결과값 로그로 보여주기
     }
 
-    public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
+
+    public  void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
         //강남//
         m_mapPoint.add(new MapPoint("단국대", 37.321232, 127.128381));
         m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
-        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
+        m_mapPoint.add(new MapPoint("남한산성", 37.479363, 127.184385));
         m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
         m_mapPoint.add(new MapPoint("성산 일출봉", 33.458771, 126.942672));
         m_mapPoint.add(new MapPoint("꽃지해수욕장", 36.496896, 126.335286));
