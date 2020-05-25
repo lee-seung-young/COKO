@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
+    <Button
+        android:id="@+id/btn_map"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:text="자동차 경로 안내"
+        android:textSize="@android:dimen/app_icon_size" />
     <LinearLayout
         android:id="@+id/mapview"
         android:layout_width="match_parent"
