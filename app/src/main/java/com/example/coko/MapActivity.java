@@ -48,6 +48,13 @@ public class MapActivity extends AppCompatActivity
             TMapPoint pointh = tMapView.getLocationPoint(); //현재 위치 좌표 받아 오기,  gpsLatitude, gpsLongitude 각각 위도, 경도
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
+            Log.v("현재경도",toString().valueOf(gpsLongitude)); // 현재 위도, 경도 로그로 찍기
+            Log.v("현재위도",toString().valueOf(gpsLatitude));
+
+            // 거리 구하는 함수 사용 , 현재위치 위도, 경도, 목적지 위도, 경도
+            getDistance distance = new getDistance();
+            double dtresult = distance.getDistance(gpsLatitude, gpsLongitude, 37.582978, 126.983661); //거리 비교 값 dtresult에 저장
+            Log.v("거리",toString().valueOf(dtresult)); // 저장된 결과값 로그로 찍기
         }
     }
 
@@ -113,11 +120,6 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
-
-        // 거리 구하는 함수 사용 , 현재위치 위도, 경도, 목적지 위도, 경도
-        getDistance distance = new getDistance();
-        double dtresult = distance.getDistance(gpsLatitude, gpsLongitude, 37.321232, 127.128381); //거리 비교 값 dtresult에 저장
-        Log.v("거리",toString().valueOf(dtresult)); // 저장된 결과값 로그로 보여주기
     }
 
 
