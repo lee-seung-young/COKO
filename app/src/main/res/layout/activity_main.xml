@@ -20,5 +20,5 @@
         android:layout_height="82dp"
         android:text="경로보기"
         android:textSize="@android:dimen/app_icon_size" />
-
+//주석처리
 </android.widget.LinearLayout>
