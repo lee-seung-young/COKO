@@ -1,5 +1,6 @@
 package com.example.coko;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -34,6 +35,7 @@ public class FindCarPathTask extends AsyncTask<TMapPoint,Void,Double> {
     protected void onPostExecute(Double distance){
         super.onPreExecute();
     }
+    @SuppressLint("WrongThread")
     @Override
     protected Double doInBackground(TMapPoint... tMapPoints) {
         TMapData tMapData = new TMapData();

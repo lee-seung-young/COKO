@@ -743,10 +743,12 @@ id barrier
 id beginning
 id blocking
 id bottom
-id btn_map
 id btn_map1
 id btn_map2
 id buttonPanel
+id buttonZoomIn
+id buttonZoomLevel10
+id buttonZoomOut
 id center_vertical
 id chains
 id checkbox

@@ -127,11 +127,11 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
         //강남//
-        m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
-        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
-        m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
-        m_mapPoint.add(new MapPoint("설악산", 38.079666, 128.447609));
-        m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
+        m_mapPoint.add(new MapPoint(1,"광화문", 37.576016, 126.976867));
+        m_mapPoint.add(new MapPoint(12,"남한산성", 37.2844, 127.1052));
+        m_mapPoint.add(new MapPoint(13,"삼광사", 35.175804, 129.043426));
+        m_mapPoint.add(new MapPoint(6,"설악산", 38.079666, 128.447609));
+        m_mapPoint.add(new MapPoint(7,"북촌한옥마을", 37.582978, 126.983661));
     }
 
     public void showMarkerPoint() { //마커 찍는거

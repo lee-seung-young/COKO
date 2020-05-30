@@ -40,10 +40,10 @@ public class MapActivity extends AppCompatActivity
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
+
     double gpsLatitude;
     double gpsLongitude;
-    private Button btn_map;
-    TMapData tmapdata=null;
+
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -52,6 +52,11 @@ public class MapActivity extends AppCompatActivity
             TMapPoint pointh = tMapView.getLocationPoint();
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
+
+            // 거리 구하는 함수 사용 , 현재위치 위도, 경도, 목적지 위도, 경도
+            getDistance distance = new getDistance();
+            double dtresult = distance.getDistance(gpsLatitude, gpsLongitude, 37.582978, 126.983661); //거리 비교 값 dtresult에 저장
+            Log.v("거리", toString().valueOf(dtresult)); // 저장된 결과값 로그로 찍기
         }
     }
 
@@ -82,7 +87,7 @@ public class MapActivity extends AppCompatActivity
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
         tmapgps = new TMapGpsManager(MapActivity.this);
-        tmapgps.setMinTime(0);
+        tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
         // 실내일 때 유용
@@ -99,38 +104,51 @@ public class MapActivity extends AppCompatActivity
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("필요한 항목을 선택하시오.")
-                        .setCancelable(true)
-                        .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
+                        .setIcon(R.drawable.impo1)
+                        .setCancelable(true);
+                builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                builder.setNeutralButton("찜하기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
+                            }
+                        });
+                builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
                                 startActivity(intent);
                             }
                         })
-                        .setNegativeButton("찜하기", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
-                            }
-                        })
                         .show();
-                        
             }
 
+        });
+        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn);
+        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomIn();
+            }
         });
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-        //강남//
-//        m_mapPoint.add(new MapPoint("단국대", 37.321232, 127.128381));
-//        m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
-//        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
-//        m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
-//        m_mapPoint.add(new MapPoint("성산 일출봉", 33.458771, 126.942672));
-//        m_mapPoint.add(new MapPoint("꽃지해수욕장", 36.496896, 126.335286));
-//        m_mapPoint.add(new MapPoint("남해 가천 다랭이 마을", 34.727673, 127.894119));
-//        m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
-        m_mapPoint.add(new MapPoint("설악산", 38.079666, 128.447609));
-//        m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
-//        m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
+        m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
+        m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
+        m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
+        m_mapPoint.add(new MapPoint(13, "삼광사", 35.175804, 129.043426));
+        m_mapPoint.add(new MapPoint(2, "성산 일출봉", 33.458771, 126.942672));
+        m_mapPoint.add(new MapPoint(3, "꽃지해수욕장", 36.496896, 126.335286));
+        m_mapPoint.add(new MapPoint(4, "남해 가천 다랭이 마을", 34.727673, 127.894119));
+        m_mapPoint.add(new MapPoint(5, "부산 광안대교", 35.147823, 129.130080));
+        m_mapPoint.add(new MapPoint(6, "설악산", 38.079666, 128.447609));
+        m_mapPoint.add(new MapPoint(7, "북촌한옥마을", 37.582978, 126.983661));
     }
 
     public void showMarkerPoint() { //마커 찍는거
@@ -153,7 +171,7 @@ public class MapActivity extends AppCompatActivity
             item1.setCalloutTitle(m_mapPoint.get(i).getName());
             // item1.setCalloutSubTitle( ); sub title 생성
             item1.setCanShowCallout(true);
-            item1.setAutoCalloutVisible(true);
+            item1.setAutoCalloutVisible(false);
 
             Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
 
@@ -166,9 +184,9 @@ public class MapActivity extends AppCompatActivity
 
         }
     }
+}
 
-
-//주석
+//주석 다시쓰기
 
     //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
@@ -256,4 +274,3 @@ public class MapActivity extends AppCompatActivity
 //    }
 //
 //}
-}
