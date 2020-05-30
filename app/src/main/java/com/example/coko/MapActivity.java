@@ -1,5 +1,6 @@
 package com.example.coko;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,18 +11,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.skt.Tmap.TMapData;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
-import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -44,6 +46,9 @@ public class MapActivity extends AppCompatActivity
     double gpsLatitude;
     double gpsLongitude;
 
+/*    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private ArrayList<Place> places; */
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -66,6 +71,8 @@ public class MapActivity extends AppCompatActivity
         setContentView(R.layout.activity_map);
 
         mContext = this;
+
+
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mapview);
         tMapView = new TMapView(this);
@@ -129,17 +136,33 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
-        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn);
+        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 줌인 버튼
         buttonZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tMapView.MapZoomIn();
             }
         });
+        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut);
+        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomOut();
+            }
+        });
+        Button buttongps = (Button)findViewById(R.id.buttongps);
+        buttongps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
+            }
+        });
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
+
         m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
+//        m_mapPoint.add(new MapPoint(11, ref.child("place11").child("name").toString(), ref.child("place11").child("latitude"), 127.128381));
         m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
         m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
         m_mapPoint.add(new MapPoint(13, "삼광사", 35.175804, 129.043426));
@@ -149,6 +172,27 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint(5, "부산 광안대교", 35.147823, 129.130080));
         m_mapPoint.add(new MapPoint(6, "설악산", 38.079666, 128.447609));
         m_mapPoint.add(new MapPoint(7, "북촌한옥마을", 37.582978, 126.983661));
+/*        places = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("Place");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                places.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Place place = snapshot.getValue(Place.class);
+                    places.add(place);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        m_mapPoint.add(new MapPoint(places.get(1).getPlace_id(), places.get(1).getName(), Double.parseDouble(places.get(1).getLatitude()), Double.parseDouble(places.get(1).getLongitude())));
+*/
+
     }
 
     public void showMarkerPoint() { //마커 찍는거
