@@ -6,56 +6,56 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="16"
-8-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml
+8-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml
+9-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:5:5-67
-11-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:5:22-64
+11-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:5:5-67
+11-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:5:22-64
 12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:6:5-79
-12-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:6:22-76
+12-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:6:5-79
+12-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:6:22-76
 13
 14    <application
-14-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:8:5-25:19
+14-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:8:5-25:19
 15        android:allowBackup="true"
-15-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:9:9-35
+15-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:9:9-35
 16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-16-->[androidx.core:core:1.1.0] C:\Users\oksma\.gradle\caches\transforms-2\files-2.1\34b4ab0d8b65ac74ddd00d45b26dd963\core-1.1.0\AndroidManifest.xml:24:18-86
+16-->[androidx.core:core:1.1.0] C:\Users\seungsu\.gradle\caches\transforms-2\files-2.1\34b4ab0d8b65ac74ddd00d45b26dd963\core-1.1.0\AndroidManifest.xml:24:18-86
 17        android:debuggable="true"
 18        android:icon="@mipmap/ic_launcher"
-18-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:10:9-43
+18-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:10:9-43
 19        android:label="@string/app_name"
-19-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:11:9-41
+19-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:11:9-41
 20        android:roundIcon="@mipmap/ic_launcher_round"
-20-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:12:9-54
+20-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:12:9-54
 21        android:supportsRtl="true"
-21-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:13:9-35
+21-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:13:9-35
 22        android:testOnly="true"
 23        android:theme="@style/AppTheme" >
-23-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:14:9-40
+23-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:14:9-40
 24        <activity android:name="com.example.coko.PathActivity" />
-24-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:15:9-59
-24-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:15:19-47
+24-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:15:9-59
+24-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:15:19-47
 25        <activity android:name="com.example.coko.InfoActivity" />
-25-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:16:9-50
-25-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:16:19-47
+25-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:16:9-50
+25-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:16:19-47
 26        <activity android:name="com.example.coko.MapActivity" />
-26-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:17:9-49
-26-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:17:19-46
+26-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:17:9-49
+26-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:17:19-46
 27        <activity android:name="com.example.coko.MainActivity" >
-27-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:18:9-24:20
-27-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:18:19-47
+27-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:18:9-24:20
+27-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:18:19-47
 28            <intent-filter>
-28-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:19:13-23:29
+28-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:19:13-23:29
 29                <action android:name="android.intent.action.MAIN" />
-29-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:20:17-69
-29-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:20:25-66
+29-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:20:17-69
+29-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:20:25-66
 30
 31                <category android:name="android.intent.category.LAUNCHER" />
-31-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:22:17-77
-31-->C:\Users\oksma\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:22:27-74
+31-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:22:17-77
+31-->C:\Users\seungsu\AndroidStudioProjects\COKO\app\src\main\AndroidManifest.xml:22:27-74
 32            </intent-filter>
 33        </activity>
 34    </application>

@@ -1,4 +1,4 @@
-#Sat May 30 13:42:03 KST 2020
-base.0=C\:\\Users\\oksma\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\dex\\debug\\out\\classes.dex
+#Sat May 30 17:04:51 KST 2020
+base.0=C\:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\dex\\debug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

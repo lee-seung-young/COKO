@@ -4,16 +4,26 @@ public class MapPoint {
     private String Name;
     private double latitude;
     private double longitude;
+    private int place_id;
 
     public MapPoint(){
         super();
     }
 
-    public MapPoint(String Name, double latitude, double longitude) {
+    public MapPoint(int place_id, String Name, double latitude, double longitude) {
         //super()
         this.Name=Name;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.place_id = place_id;
+    }
+
+    public int getPlace_id() {
+        return place_id;
+    }
+
+    public void setPlace_id(int place_id) {
+        this.place_id = place_id;
     }
 
     public String getName(){
