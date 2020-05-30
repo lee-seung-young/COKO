@@ -40,20 +40,28 @@ import static com.skt.Tmap.TMapMarkerItem.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_map;
-
+    private Button btn_map1;
+    private Button btn_map2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_map=findViewById(R.id.btn_map);
+        btn_map1=findViewById(R.id.btn_map1);
+        btn_map2=findViewById(R.id.btn_map2);
 
-        btn_map.setOnClickListener(new View.OnClickListener(){
+        btn_map1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent=new Intent(MainActivity.this,MapActivity.class);
-                startActivity(intent); //액티비티 이동
+                Intent intent1=new Intent(MainActivity.this,MapActivity.class);
+                startActivity(intent1); //액티비티 이동
+            }
+        });
+        btn_map2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent2=new Intent(MainActivity.this,PathActivity.class);
+                startActivity(intent2);
             }
         });
 

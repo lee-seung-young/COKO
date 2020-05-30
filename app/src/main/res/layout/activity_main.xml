@@ -8,10 +8,17 @@
         tools:context=".MainActivity">
 
         <Button
-            android:id="@+id/btn_map"
+            android:id="@+id/btn_map1"
             android:layout_width="match_parent"
             android:layout_height="82dp"
             android:text="지도 보기"
             android:textSize="@android:dimen/app_icon_size" />
 
-    </android.widget.LinearLayout>
+        <Button
+            android:id="@+id/btn_map2"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:text="경로보기"
+        android:textSize="@android:dimen/app_icon_size" />
+
+</android.widget.LinearLayout>
