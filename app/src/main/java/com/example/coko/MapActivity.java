@@ -89,11 +89,6 @@ public class MapActivity extends AppCompatActivity
         //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
 
-        /*
-        getDistance distance = new getDistance();
-        double result = distance.getDistance(gpsLatitude, gpsLongitude, 37.2844, 127.1052);
-      */
-
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
@@ -121,30 +116,21 @@ public class MapActivity extends AppCompatActivity
             }
 
         });
-        /*버튼 생성 및 버튼 누르면 차로 목적지까지 가는 경로 보여줌*/
-        btn_map=findViewById(R.id.btn_map);
-        btn_map.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //Intent intent=new Intent(MapActivity.this,MapActivity.class);
-                GetCarPath(new TMapPoint(gpsLatitude,gpsLongitude),new TMapPoint(38.079666, 128.447609));
-            }
-        });
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
         //강남//
-        m_mapPoint.add(new MapPoint("단국대", 37.321232, 127.128381));
-        m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
-        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
-        m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
-        m_mapPoint.add(new MapPoint("성산 일출봉", 33.458771, 126.942672));
-        m_mapPoint.add(new MapPoint("꽃지해수욕장", 36.496896, 126.335286));
-        m_mapPoint.add(new MapPoint("남해 가천 다랭이 마을", 34.727673, 127.894119));
-        m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
+//        m_mapPoint.add(new MapPoint("단국대", 37.321232, 127.128381));
+//        m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
+//        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
+//        m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
+//        m_mapPoint.add(new MapPoint("성산 일출봉", 33.458771, 126.942672));
+//        m_mapPoint.add(new MapPoint("꽃지해수욕장", 36.496896, 126.335286));
+//        m_mapPoint.add(new MapPoint("남해 가천 다랭이 마을", 34.727673, 127.894119));
+//        m_mapPoint.add(new MapPoint("부산 광안대교", 35.147823, 129.130080));
         m_mapPoint.add(new MapPoint("설악산", 38.079666, 128.447609));
-        m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
-        m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
+//        m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
+//        m_mapPoint.add(new MapPoint("현재위치",gpsLongitude, gpsLongitude));
     }
 
     public void showMarkerPoint() { //마커 찍는거
@@ -180,16 +166,7 @@ public class MapActivity extends AppCompatActivity
 
         }
     }
-    /*차로가는 경로 보여주는 함수*/
-    void GetCarPath(TMapPoint startPoint,TMapPoint endPoint){
-    tmapdata=new TMapData();
-    tmapdata.findPathData(startPoint, endPoint,new TMapData.FindPathDataListenerCallback() {
-            @Override
-            public void onFindPathData(TMapPolyLine polyLine) {
-                tMapView.addTMapPath(polyLine);
-            }
-        });
-    }
+
 
 
 
