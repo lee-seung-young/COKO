@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -20,6 +21,10 @@ import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 
@@ -47,7 +52,10 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             TMapPoint pointh = tMapView.getLocationPoint();
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
-            GetCarPath(new TMapPoint(gpsLatitude, gpsLongitude), new TMapPoint(38.079666, 128.447609));
+            //GetCarPath(new TMapPoint(gpsLatitude, gpsLongitude), new TMapPoint(38.079666, 128.447609)); 경로 1개
+            FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView);
+            findCarPathTask.execute(new TMapPoint(gpsLatitude,gpsLongitude),new TMapPoint(37.576016, 126.976867),new TMapPoint(37.2844, 127.1052),
+                    new TMapPoint(35.175804, 129.043426),new TMapPoint(38.079666, 128.447609),new TMapPoint(37.582978, 126.983661));
         }
     }
 
@@ -119,11 +127,11 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
         //강남//
-        m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
-        m_mapPoint.add(new MapPoint("남한산성", 37.2844, 127.1052));
-        m_mapPoint.add(new MapPoint("삼광사", 35.175804, 129.043426));
-        m_mapPoint.add(new MapPoint("설악산", 38.079666, 128.447609));
-        m_mapPoint.add(new MapPoint("북촌한옥마을", 37.582978, 126.983661));
+        m_mapPoint.add(new MapPoint(1,"광화문", 37.576016, 126.976867));
+        m_mapPoint.add(new MapPoint(12,"남한산성", 37.2844, 127.1052));
+        m_mapPoint.add(new MapPoint(13,"삼광사", 35.175804, 129.043426));
+        m_mapPoint.add(new MapPoint(6,"설악산", 38.079666, 128.447609));
+        m_mapPoint.add(new MapPoint(7,"북촌한옥마을", 37.582978, 126.983661));
     }
 
     public void showMarkerPoint() { //마커 찍는거
