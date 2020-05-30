@@ -124,7 +124,7 @@ public class MapActivity extends AppCompatActivity
 
 
     public  void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-        //강남//
+
         m_mapPoint.add(new MapPoint("단국대", 37.321232, 127.128381));
         m_mapPoint.add(new MapPoint("광화문", 37.576016, 126.976867));
         m_mapPoint.add(new MapPoint("남한산성", 37.479363, 127.184385));
@@ -152,13 +152,10 @@ public class MapActivity extends AppCompatActivity
 
             item1.setIcon(bitmap);
 
-            //bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
-
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(m_mapPoint.get(i).getName());
-            // item1.setCalloutSubTitle( ); sub title 생성
             item1.setCanShowCallout(true);
-            item1.setAutoCalloutVisible(true);
+            item1.setAutoCalloutVisible(false);
 
             Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
 
