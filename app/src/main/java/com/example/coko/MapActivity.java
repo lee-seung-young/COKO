@@ -186,7 +186,7 @@ public class MapActivity extends AppCompatActivity
     }
 }
 
-//주석
+//주석 다시쓰기
 
     //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
