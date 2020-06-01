@@ -155,4 +155,5 @@ public class ListSortingActivity extends AppCompatActivity {
     public Place ret_Place(){
         return list.get(0);
     }
+    //
 }
