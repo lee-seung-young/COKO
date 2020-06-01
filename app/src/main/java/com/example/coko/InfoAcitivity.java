@@ -1,5 +1,6 @@
 package com.example.coko;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,8 +43,10 @@ public class InfoAcitivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        place_id = getIntent().getStringExtra("place_id");
+//        place_id = getIntent().getStringExtra(place_id);
 //        place_name = getIntent().getStringExtra("place_name");
+        Intent i = getIntent();
+        String place_id = i.getStringExtra("place_id");
 
 //        place_id = "22";
 
@@ -68,7 +71,9 @@ public class InfoAcitivity extends AppCompatActivity {
 
         String place = "place";
 //        final String placeId = place.concat(place_id);
-        final String placeId = place.concat("10");
+//        final String placeId = place.concat("10");
+        final String placeId = place.concat(place_id);
+
 
         ref = FirebaseDatabase.getInstance().getReference().child("Place").child(placeId);
         ref.addValueEventListener(new ValueEventListener() {

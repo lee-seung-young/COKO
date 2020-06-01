@@ -125,6 +125,8 @@ public class MapActivity extends AppCompatActivity
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
+        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
+        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
         m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
         m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
         m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
@@ -188,29 +190,22 @@ public class MapActivity extends AppCompatActivity
 
                     }
                 });
-                builder.setNeutralButton("찜/찜취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
-                    }
-                });
                 builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
-                        intent.putExtra("Place_id", markerItem.getID());
+                        intent.putExtra("place_id", markerItem.getID());
                         Log.v("#######id", markerItem.getID());
                         startActivity(intent);
                     }
                 })
                         .show();
             }
-
         });
     }
 }
 
-//주석 다시쓰기
+
 
     //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
