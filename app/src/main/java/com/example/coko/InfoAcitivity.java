@@ -67,7 +67,8 @@ public class InfoAcitivity extends AppCompatActivity {
 //        String id = FirebaseDatabase.getInstance()
 
         String place = "place";
-        final String placeId = place.concat(place_id);
+//        final String placeId = place.concat(place_id);
+        final String placeId = place.concat("10");
 
         ref = FirebaseDatabase.getInstance().getReference().child("Place").child(placeId);
         ref.addValueEventListener(new ValueEventListener() {

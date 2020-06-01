@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".PathActivity"></activity>
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".InfoAcitivity" />
         <activity android:name=".MapActivity" />
+        <activity android:name=".LikesActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
