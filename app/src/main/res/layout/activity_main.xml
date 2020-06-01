@@ -20,5 +20,23 @@
         android:layout_height="82dp"
         android:text="경로보기"
         android:textSize="@android:dimen/app_icon_size" />
-//주석처리
+
+
+    <Button
+        android:id="@+id/button_likeslist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="찜하기 목록 보기"
+        android:textSize="25dp"
+        />
+
+
+    <Button
+        android:id="@+id/button_placeinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="관광지 정보 보기"
+        android:textSize="25dp"
+        />
+
 </android.widget.LinearLayout>

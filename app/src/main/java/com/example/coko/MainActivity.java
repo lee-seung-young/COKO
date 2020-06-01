@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btn_map1;
     private Button btn_map2;
+
+    private Button likeslist;
+    private Button placeinfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         btn_map1=findViewById(R.id.btn_map1);
         btn_map2=findViewById(R.id.btn_map2);
+
+        likeslist = findViewById(R.id.button_likeslist);
+        placeinfo = findViewById(R.id.button_placeinfo);
 
         btn_map1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -64,6 +71,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+        likeslist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LikesActivity.class);
+                startActivity(intent);
+            }
+        });
+        placeinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, InfoAcitivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }
