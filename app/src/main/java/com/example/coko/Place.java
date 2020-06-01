@@ -3,8 +3,8 @@ public class Place {
 
     private int place_id;
     private String  name;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private String location;
     private String time;
     private String description;
@@ -13,6 +13,8 @@ public class Place {
 
 
     public Place() { }
+
+    public Place(int place_id, String name, double latitude, double longitude){};
 
     public int getPlace_id() {
         return place_id;
@@ -30,21 +32,6 @@ public class Place {
         this.name = name;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
 
     public String getLocation() {
         return location;
@@ -52,6 +39,22 @@ public class Place {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getTime() {
