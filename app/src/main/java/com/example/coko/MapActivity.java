@@ -11,14 +11,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -88,8 +96,9 @@ public class MapActivity extends AppCompatActivity
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
+        // 실내일 때 유용
+        //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
-
 
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
@@ -122,7 +131,8 @@ public class MapActivity extends AppCompatActivity
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-
+        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
+        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
         m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
         m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
         m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
@@ -152,12 +162,15 @@ public class MapActivity extends AppCompatActivity
             item1.setTMapPoint(point);
             item1.setName(markName);
             item1.setVisible(item1.VISIBLE);
+
             item1.setIcon(bitmap);
+
+            //bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(markName);
 
-//          item1.setCalloutSubTitle( );//서브 타이틀 지정
+            //item1.setCalloutSubTitle( ); //서브 타이틀 지정
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(false);
 
@@ -165,53 +178,45 @@ public class MapActivity extends AppCompatActivity
 
             item1.setCalloutRightButtonImage(bitmap_i);
 
-           final String strID = String.format("pmarker%d", place_num);
-
+//            String strID = String.format("pmarker%d", place_num);
+           final String strID = String.valueOf(place_num);
             tMapView.addMarkerItem(strID, item1);
             mArrayMarkerID.add(strID);
-
-            //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
-            tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
-                @Override
-                public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("필요한 항목을 선택하시오.")
-                            .setIcon(R.drawable.impo1)
-                            .setCancelable(true);
-                    builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-
-                        }
-                    });
-                    builder.setNeutralButton("찜/찜취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
-                        }
-                    });
-                    builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
-                            intent.putExtra("Place_id", strID);
-                            Log.v("#######id", strID);
-                            startActivity(intent);
-                        }
-                    })
-                            .show();
-                }
-
-            });
-
+            Log.v("sadasda id",strID);
 
         }
+        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
+        tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+            @Override
+            public void onCalloutRightButton(final TMapMarkerItem markerItem) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("필요한 항목을 선택하시오.")
+                        .setIcon(R.drawable.impo1)
+                        .setCancelable(true);
+                builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+                builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
+                        intent.putExtra("place_id", markerItem.getID());
+                        Log.v("#######id", markerItem.getID());
+                        startActivity(intent);
+                    }
+                })
+                        .show();
+            }
+        });
     }
 }
 
-//주석 다시쓰기
 
-//        /*현재위치를 받아 표시해줌*/
+
+    //        /*현재위치를 받아 표시해줌*/
 //        tmap=new TMapView(this);
 //        tmap.setSKTMapApiKey("l7xx84f4860b8e1b4a5a92b716682a24c0b8");
 //        linearLayoutTmap.addView(tmap);

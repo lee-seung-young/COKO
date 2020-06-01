@@ -4,7 +4,7 @@ public class MapPoint {
     private String Name;
     private double latitude;
     private double longitude;
-    private int place_id;
+    private int Place_id;
 
     public MapPoint(){
         super();
@@ -15,15 +15,15 @@ public class MapPoint {
         this.Name=Name;
         this.latitude=latitude;
         this.longitude=longitude;
-        this.place_id = place_id;
+        this.Place_id = place_id;
     }
 
     public int getPlace_id() {
-        return place_id;
+        return Place_id;
     }
 
     public void setPlace_id(int place_id) {
-        this.place_id = place_id;
+        this.Place_id = place_id;
     }
 
     public String getName(){

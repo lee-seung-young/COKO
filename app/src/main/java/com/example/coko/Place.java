@@ -17,6 +17,7 @@ public class Place {
 
     public Place() { }
 
+    public Place(int place_id, String name, double latitude, double longitude){};
     public Place(int place_id,String name,double latitude, double longitude,String location,String time, String description,String pic, boolean likeox){
         this.place_id=place_id;
         this.name=name;

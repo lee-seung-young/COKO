@@ -103,7 +103,7 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
                         .setCancelable(true)
                         .setPositiveButton("세부정보", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
                                 startActivity(intent);
                             }
                         })
