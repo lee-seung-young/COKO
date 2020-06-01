@@ -1,5 +1,6 @@
 package com.example.coko;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,18 +11,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.skt.Tmap.TMapData;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
-import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -44,6 +46,9 @@ public class MapActivity extends AppCompatActivity
     double gpsLatitude;
     double gpsLongitude;
 
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private ArrayList<Place> places;
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -90,68 +95,57 @@ public class MapActivity extends AppCompatActivity
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
-        // 실내일 때 유용
-        //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
+
 
         /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
 
-        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
-        tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
-            @Override
-            public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("필요한 항목을 선택하시오.")
-                        .setIcon(R.drawable.impo1)
-                        .setCancelable(true);
-                builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
 
-                            }
-                        });
-                builder.setNeutralButton("찜하기", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
-                            }
-                        });
-                builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .show();
-            }
-
-        });
-        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn);
+        // 맵 화면 버튼 3가지 구성
+        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
         buttonZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tMapView.MapZoomIn();
             }
         });
+        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut); // 축소 버튼
+        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomOut();
+            }
+        });
+        Button buttongps = (Button)findViewById(R.id.buttongps); // 현재위치로 화면을 옮기는 버튼
+        buttongps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
+            }
+        });
+
     }
 
     public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-        m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
+
+        m_mapPoint.add(new MapPoint(11, "dankook", 37.321232, 127.128381));
         m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
         m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
         m_mapPoint.add(new MapPoint(13, "삼광사", 35.175804, 129.043426));
         m_mapPoint.add(new MapPoint(2, "성산 일출봉", 33.458771, 126.942672));
         m_mapPoint.add(new MapPoint(3, "꽃지해수욕장", 36.496896, 126.335286));
-        m_mapPoint.add(new MapPoint(4, "남해 가천 다랭이 마을", 34.727673, 127.894119));
-        m_mapPoint.add(new MapPoint(5, "부산 광안대교", 35.147823, 129.130080));
-        m_mapPoint.add(new MapPoint(6, "설악산", 38.079666, 128.447609));
-        m_mapPoint.add(new MapPoint(7, "북촌한옥마을", 37.582978, 126.983661));
+//        m_mapPoint.add(new MapPoint(4, "남해 가천 다랭이 마을", 34.727673, 127.894119));
+//        m_mapPoint.add(new MapPoint(5, "부산 광안대교", 35.147823, 129.130080));
+//        m_mapPoint.add(new MapPoint(6, "설악산", 38.079666, 128.447609));
+//        m_mapPoint.add(new MapPoint(7, "북촌한옥마을", 37.582978, 126.983661));
+
     }
 
+
     public void showMarkerPoint() { //마커 찍는거
+
         for (int i = 0; i < m_mapPoint.size(); i++) {
             TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
                     m_mapPoint.get(i).getLongitude());
@@ -159,8 +153,13 @@ public class MapActivity extends AppCompatActivity
             Bitmap bitmap = null;
             bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
+            String markName = m_mapPoint.get(i).getName();
+            int place_num = m_mapPoint.get(i).getPlace_id();
+
             item1.setTMapPoint(point);
-            item1.setName(m_mapPoint.get(i).getName());
+            item1.setName(markName);
+//            item1.setID(String.valueOf(place_num));
+//            item1.setID(String.valueOf(m_mapPoint.get(i).getPlace_id()));
             item1.setVisible(item1.VISIBLE);
 
             item1.setIcon(bitmap);
@@ -168,7 +167,10 @@ public class MapActivity extends AppCompatActivity
             //bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             //풍선뷰 안의 항목에 글을 지정
-            item1.setCalloutTitle(m_mapPoint.get(i).getName());
+            item1.setCalloutTitle(markName);
+
+//            final int place_identy = m_mapPoint.get(i).getPlace_id();
+//            item1.setCalloutTitle(m_mapPoint.get(i).getName());
             // item1.setCalloutSubTitle( ); sub title 생성
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(false);
@@ -181,6 +183,41 @@ public class MapActivity extends AppCompatActivity
 
             tMapView.addMarkerItem(strID, item1);
             mArrayMarkerID.add(strID);
+
+            //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
+            tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+                @Override
+                public void onCalloutRightButton(TMapMarkerItem markerItem) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("필요한 항목을 선택하시오.")
+                            .setIcon(R.drawable.impo1)
+                            .setCancelable(true);
+                    builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    });
+                    builder.setNeutralButton("찜/찜취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //디비 -- 해당 마커 관광지의 정보를 받아서 찜목록에 추가하는 기능
+                        }
+                    });
+                    builder.setNegativeButton("세부정보", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            id = 100;
+                            Log.d("*********Place id", String.valueOf(id));
+                            Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+                            intent.putExtra("Place_id", id);
+                            startActivity(intent);
+                        }
+                    })
+                            .show();
+                }
+
+            });
 
         }
     }
