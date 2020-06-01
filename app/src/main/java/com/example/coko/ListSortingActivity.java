@@ -55,13 +55,30 @@ public class ListSortingActivity extends AppCompatActivity {
         }
         sortByDistance();
         for(int i=0;i<list.size();i++){
-            Log.d("************8","place_id"+toString().valueOf(list.get(i).getPlace_id()));
-            Log.d("***********","distance"+toString().valueOf(list.get(i).getDistance()));
+            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
+                    +" popularity "+toString().valueOf(list.get(i).getVisiters()));
         }
         chosenByPopularity();
         for(int i=0;i<list.size();i++){
-            Log.d("************8","place_id "+toString().valueOf(list.get(i).getPlace_id()));
-            Log.d("***********","popularity "+toString().valueOf(list.get(i).getVisiters()));
+            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
+            +" popularity "+toString().valueOf(list.get(i).getVisiters()));
+        }
+        sortByDistance();
+        for(int i=0;i<list.size();i++){
+            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
+                    +" popularity "+toString().valueOf(list.get(i).getVisiters()));
+        }
+        Place place=ret_Place();
+        Log.d("************","place_id "+toString().valueOf(place.getPlace_id())+" distance "+toString().valueOf(place.getDistance())
+                +" popularity "+toString().valueOf(place.getVisiters()));
+        this.latitude=place.getLatitude();
+        this.longitude=place.getLongitude();
+        Log.d("*******","위도: "+ toString().valueOf(latitude));
+        list.remove(0);
+        sortByDistance();
+        for(int i=0;i<list.size();i++){
+            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
+                    +" popularity "+toString().valueOf(list.get(i).getVisiters()));
         }
     }
 
@@ -106,7 +123,7 @@ public class ListSortingActivity extends AppCompatActivity {
         }
         Collections.sort(this.list,comp);
         for(int i=0;i<this.list.size();i++){
-            if(i>=3)
+            if(i>=2)
             {
                 list.remove(i);
             }
@@ -135,4 +152,7 @@ public class ListSortingActivity extends AppCompatActivity {
 
         }
     };
+    public Place ret_Place(){
+        return list.get(0);
+    }
 }
