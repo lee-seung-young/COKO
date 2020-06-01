@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:text="축소"></Button>
         <Button
-            android:id="@+id/buttonZoomLevel10"
+            android:id="@+id/buttongps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
