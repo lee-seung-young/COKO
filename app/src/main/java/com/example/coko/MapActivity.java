@@ -49,8 +49,6 @@ public class MapActivity extends AppCompatActivity
     double gpsLatitude;
     double gpsLongitude;
 
-    private ArrayList<Place> places;
-
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
@@ -96,11 +94,10 @@ public class MapActivity extends AppCompatActivity
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
-        // 실내일 때 유용
-        //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
 
-        /*화면중심을 단말의 현재위치로 이동*/
+
+        //화면중심을 단말의 현재위치로 이동
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
 
@@ -142,15 +139,11 @@ public class MapActivity extends AppCompatActivity
             bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             final String markName = m_mapPoint.get(i).getName();
-            int place_num = m_mapPoint.get(i).getPlace_id();
 
             item1.setTMapPoint(point);
             item1.setName(markName);
             item1.setVisible(item1.VISIBLE);
-
             item1.setIcon(bitmap);
-
-            //bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(markName);
@@ -163,19 +156,20 @@ public class MapActivity extends AppCompatActivity
 
             item1.setCalloutRightButtonImage(bitmap_i);
 
-//            String strID = String.format("pmarker%d", place_num);
-           final String strID = String.valueOf(place_num);
+            int place_num = m_mapPoint.get(i).getPlace_id(); //place_id를 place_num으로 가져옴
+            final String strID = String.valueOf(place_num); // place_num을 strID로 저장
             tMapView.addMarkerItem(strID, item1);
             mArrayMarkerID.add(strID);
-            Log.v("sadasda id",strID);
+//            Log.v("sadasda id",strID); strID 로그로 확인
 
         }
-        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(찜하기/세부정보)
+        //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(취소/세부정보)
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
             public void onCalloutRightButton(final TMapMarkerItem markerItem) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("필요한 항목을 선택하시오.")
+                builder.setTitle("정보 보기")
+                        .setMessage(markerItem.getName()+"의 자세한 정보를 보려면 아래 [세부정보] 버튼을 누르시오.")
                         .setIcon(R.drawable.impo1)
                         .setCancelable(true);
                 builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
@@ -189,7 +183,7 @@ public class MapActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
                         intent.putExtra("place_id", markerItem.getID());
-                        Log.v("#######id", markerItem.getID()); // 로그로 id 확인
+//                        Log.v("#######id", markerItem.getID()); // 로그로 id 확인
                         startActivity(intent);
                     }
                 })
@@ -259,7 +253,6 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint(58, "플레이아쿠아리움", 37.49976, 126.743402));
         m_mapPoint.add(new MapPoint(59, "만안교", 37.414154, 126.91188));
         m_mapPoint.add(new MapPoint(60, "현충원", 37.503812, 126.975519));
-        
     }
 
 }
