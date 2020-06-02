@@ -83,7 +83,7 @@ public class MapActivity extends AppCompatActivity
         tMapView.setIconVisibility(true);
 
         /*줌레벨*/
-        tMapView.setZoomLevel(13);
+        tMapView.setZoomLevel(12);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
@@ -124,21 +124,6 @@ public class MapActivity extends AppCompatActivity
 
     }
 
-    public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
-        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
-        m_mapPoint.add(new MapPoint(11, "단국대", 37.321232, 127.128381));
-        m_mapPoint.add(new MapPoint(1, "광화문", 37.576016, 126.976867));
-        m_mapPoint.add(new MapPoint(12, "남한산성", 37.2844, 127.1052));
-        m_mapPoint.add(new MapPoint(13, "삼광사", 35.175804, 129.043426));
-        m_mapPoint.add(new MapPoint(2, "성산 일출봉", 33.458771, 126.942672));
-        m_mapPoint.add(new MapPoint(3, "꽃지해수욕장", 36.496896, 126.335286));
-        m_mapPoint.add(new MapPoint(4, "남해 가천 다랭이 마을", 34.727673, 127.894119));
-        m_mapPoint.add(new MapPoint(5, "부산 광안대교", 35.147823, 129.130080));
-        m_mapPoint.add(new MapPoint(6, "설악산", 38.079666, 128.447609));
-        m_mapPoint.add(new MapPoint(7, "북촌한옥마을", 37.582978, 126.983661));
-
-    }
 
 
     public void showMarkerPoint() { //마커 찍는거
@@ -195,7 +180,7 @@ public class MapActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
                         intent.putExtra("place_id", markerItem.getID());
-                        Log.v("#######id", markerItem.getID());
+                        Log.v("#######id", markerItem.getID()); // 로그로 id 확인
                         startActivity(intent);
                     }
                 })
@@ -203,93 +188,70 @@ public class MapActivity extends AppCompatActivity
             }
         });
     }
+
+    public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
+        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
+        m_mapPoint.add(new MapPoint(2, "남산타워", 37.551348, 126.988248));
+        m_mapPoint.add(new MapPoint(3, "이태원", 37.539776, 126.991364));
+        m_mapPoint.add(new MapPoint(4, "청계천", 37.569306, 126.978658));
+        m_mapPoint.add(new MapPoint(5, "북촌한옥마을", 37.582586, 126.983557));
+        m_mapPoint.add(new MapPoint(6, "롯데월드", 37.511365, 127.098108));
+        m_mapPoint.add(new MapPoint(7, "한국민속촌", 37.258602, 127.117036));
+        m_mapPoint.add(new MapPoint(8, "단국대", 37.32188, 127.126804));
+        m_mapPoint.add(new MapPoint(9, "동대문디자인프라자", 37.566925, 127.009408));
+        m_mapPoint.add(new MapPoint(10, "광화문", 37.577978, 126.976288));
+        m_mapPoint.add(new MapPoint(11, "에버랜드", 37.29559, 127.202605));
+        m_mapPoint.add(new MapPoint(12, "광교호수공원", 37.283217, 127.065992));
+        m_mapPoint.add(new MapPoint(13, "물향기수목원", 37.166741, 127.056633));
+        m_mapPoint.add(new MapPoint(14, "여의도한강공원", 37.52864, 126.934258));
+        m_mapPoint.add(new MapPoint(15, "북한산국립공원", 37.620065, 126.995541));
+        m_mapPoint.add(new MapPoint(16, "올림픽공원", 37.521038, 127.121592));
+        m_mapPoint.add(new MapPoint(17, "남한산성", 37.479097, 127.181246));
+        m_mapPoint.add(new MapPoint(18, "호암미술관", 37.294688, 127.191687));
+        m_mapPoint.add(new MapPoint(19, "국립과천박물관", 37.438463, 127.005781));
+        m_mapPoint.add(new MapPoint(20, "낙산공원", 37.580844, 127.007462));
+        m_mapPoint.add(new MapPoint(21, "국립중앙박물관", 37.523949, 126.980469));
+        m_mapPoint.add(new MapPoint(22, "성남아트센터", 37.403173, 127.132034));
+        m_mapPoint.add(new MapPoint(23, "성남중앙공원", 37.377092, 127.123784));
+        m_mapPoint.add(new MapPoint(24, "봉은사", 37.514906, 127.057375));
+        m_mapPoint.add(new MapPoint(25, "별마당도서관", 37.509971, 127.060277));
+        m_mapPoint.add(new MapPoint(26, "율동공원책테마파크", 37.380344, 127.148917));
+        m_mapPoint.add(new MapPoint(27, "경희궁", 37.571248, 126.968169));
+        m_mapPoint.add(new MapPoint(28, "신사동 가로수길", 37.52059, 127.02293));
+        m_mapPoint.add(new MapPoint(29, "남산골한옥마을", 37.559332, 126.994499));
+        m_mapPoint.add(new MapPoint(30, "한류스타거리", 37.527364, 127.04246));
+        m_mapPoint.add(new MapPoint(31, "예술의전당", 37.479078, 127.011708));
+        m_mapPoint.add(new MapPoint(32, "한양도성 순성길", 37.568425, 127.010181));
+        m_mapPoint.add(new MapPoint(33, "양재시민의숲", 37.470806, 127.035728));
+        m_mapPoint.add(new MapPoint(34, "덕수궁", 37.565819, 126.975125));
+        m_mapPoint.add(new MapPoint(35, "세빛섬", 37.511955, 126.995028));
+        m_mapPoint.add(new MapPoint(36, "몽마르뜨공원", 37.495188, 127.003502));
+        m_mapPoint.add(new MapPoint(37, "잠실종합운동장", 37.514904, 127.073014));
+        m_mapPoint.add(new MapPoint(38, "LG아트센터", 37.501869, 127.037276));
+        m_mapPoint.add(new MapPoint(39, "유니버설아트센터", 37.550865, 127.087918));
+        m_mapPoint.add(new MapPoint(40, "수원화성", 37.288541, 127.013936));
+        m_mapPoint.add(new MapPoint(41, "전쟁기념관", 37.536819, 126.977129));
+        m_mapPoint.add(new MapPoint(42, "인사동", 37.571762, 126.985619));
+        m_mapPoint.add(new MapPoint(43, "명동", 37.561087, 126.986213));
+        m_mapPoint.add(new MapPoint(44, "창덕궁", 37.578073, 126.989372));
+        m_mapPoint.add(new MapPoint(45, "디뮤지엄", 37.537387, 127.011437));
+        m_mapPoint.add(new MapPoint(46, "서울숲", 37.544037, 127.036336));
+        m_mapPoint.add(new MapPoint(47, "어린이대공원", 37.547965, 127.074591));
+        m_mapPoint.add(new MapPoint(48, "푸른수목원", 37.482317, 126.82311));
+        m_mapPoint.add(new MapPoint(49, "63빌딩", 37.520637, 126.939952));
+        m_mapPoint.add(new MapPoint(50, "낙성대공원", 37.471993, 126.958604));
+        m_mapPoint.add(new MapPoint(51, "서울식물원", 37.57098, 126.836204));
+        m_mapPoint.add(new MapPoint(52, "월미도", 37.471488, 126.596351));
+        m_mapPoint.add(new MapPoint(53, "국립수목원", 37.754688, 127.168278));
+        m_mapPoint.add(new MapPoint(54, "경인아라뱃길", 37.572936, 126.701339));
+        m_mapPoint.add(new MapPoint(55, "상동호수공원", 37.501536, 126.74673));
+        m_mapPoint.add(new MapPoint(56, "아인스월드", 37.511908, 126.744218));
+        m_mapPoint.add(new MapPoint(57, "한국만화박물관", 37.507557, 126.742726));
+        m_mapPoint.add(new MapPoint(58, "플레이아쿠아리움", 37.49976, 126.743402));
+        m_mapPoint.add(new MapPoint(59, "만안교", 37.414154, 126.91188));
+        m_mapPoint.add(new MapPoint(60, "현충원", 37.503812, 126.975519));
+
+
+    }
+
 }
-
-
-
-    //        /*현재위치를 받아 표시해줌*/
-//        tmap=new TMapView(this);
-//        tmap.setSKTMapApiKey("l7xx84f4860b8e1b4a5a92b716682a24c0b8");
-//        linearLayoutTmap.addView(tmap);
-//        tmap.setIconVisibility(true); //현재위치로 표시될 아이콘을 표시할지 여부 설정
-//
-//        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
-//                ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
-//        {
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-//                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1); //위치권한 탐색 허용 관련 내용
-//            }
-//            return;
-//        }
-//setGps();
-//        alTMapPoint.add(new TMapPoint(37.576016,126.976867)); //광화문
-//        alTMapPoint.add(new TMapPoint(37.2844, 127.1052)); //남한산성
-//        alTMapPoint.add(new TMapPoint(37.321232,127.128381)); //단국대
-//        //alTMapPoint.add(new TMapPoint(35.175804,129.043426)); //삼광사
-//        //alTMapPoint.add(new TMapPoint(33.458771,126.942672)); //성산 일출봉
-//        //alTMapPoint.add(new TMapPoint(36.496896,126.335286)); //꽃지해수욕장
-//        //alTMapPoint.add(new TMapPoint(34.727673,127.894119)); //남해 가천 다랭이 마을
-//        //alTMapPoint.add(new TMapPoint(35.147823,129.130080)); //부산 광안대교
-//        //alTMapPoint.add(new TMapPoint(38.119597,128.465550)); //설악산
-//        //alTMapPoint.add(new TMapPoint(37.582978,126.983661)); //북촌한옥마을
-//        //마커 이미지 생성
-//        final Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.pin);
-//        for(int i=0;i<3;i++){
-//            TMapMarkerItem markerItem1=new TMapMarkerItem();
-//            //마커 아이콘 지정
-//            markerItem1.setTMapPoint((TMapPoint) alTMapPoint.get(i));
-//            //지도에 마커 추가
-//            tmap.addMarkerItem("markerItem"+i,markerItem1);
-//        }
-//        /*자동차 경로 안내 : 출발지 위치 좌표 & 도착지 위치 좌표 사용 */
-//        /* 현재 위치 좌표 반환 (지금 내가 있는 좌표가 아니라 SKT 타워로 나옴!! 수정해야됨**)*/
-//        TMapPoint tpoint = tmap.getLocationPoint();
-//        double Latitude=tpoint.getLatitude();
-//        double Longitude=tpoint.getLongitude();
-//
-//        TMapPoint tMapPointStart=new TMapPoint(Latitude,Longitude);
-//        TMapPoint tMapPointEnd=new TMapPoint(37.321232,127.128381); //단국대
-//        /*출발, 목적지 값으로 경로탐색을 요청, 경로 그림*/
-//        tmapdata.findPathData(tMapPointStart, tMapPointEnd, new TMapData.FindPathDataListenerCallback() {
-//            @Override
-//            public void onFindPathData(TMapPolyLine polyLine) {
-//                tmap.addTMapPath(polyLine);
-//            }
-//        });
-//
-//    }
-//    private final LocationListener mLocationListener = new LocationListener(){
-//        public void onLocationChanged(Location location){
-//            //현재위치의 좌표를 알수있는 부분
-//            if(location !=null){
-//                double latitude=location.getLatitude();
-//                double longitude=location.getLongitude();
-//                tmap.setLocationPoint(longitude,latitude);
-//                tmap.setCenterPoint(longitude,latitude);
-//                Log.d("TmapTest",""+longitude+","+latitude);
-//            }
-//        }
-//        public void onProviderDisabled(String provider){
-//
-//        }
-//        public void onProviderEnabled(String provider){
-//
-//        }
-//        public void onStatusChanged(String provider, int status, Bundle extras){
-//
-//        }
-//    };
-//    public void setGps(){
-//       final LocationManager lm=(LocationManager)this.getSystemService(LOCATION_SERVICE);
-//       if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED&&
-//       ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-//           ActivityCompat.requestPermissions(this,new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION,
-//                   android.Manifest.permission.ACCESS_FINE_LOCATION},1);
-//       }
-//       lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, //등록할 위치제공자 (실내에선 NETWORK_PROVIDER 권장)
-//               1000,//통지사이의 최소 시간 간격(MILLISECOND)
-//               1, //통지사이의 최소 변경 거리 (m)
-//               mLocationListener);
-//    }
-//
-//}
