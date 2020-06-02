@@ -54,6 +54,8 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             gpsLongitude = pointh.getLongitude();
             //GetCarPath(new TMapPoint(gpsLatitude, gpsLongitude), new TMapPoint(38.079666, 128.447609)); 경로 1개
             FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView);
+
+
             findCarPathTask.execute(new TMapPoint(gpsLatitude,gpsLongitude),new TMapPoint(37.576016, 126.976867),new TMapPoint(37.2844, 127.1052),
                     new TMapPoint(35.175804, 129.043426),new TMapPoint(38.079666, 128.447609),new TMapPoint(37.582978, 126.983661));
         }

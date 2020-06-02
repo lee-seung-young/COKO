@@ -1,4 +1,5 @@
 package com.example.coko;
+
 public class Place {
 
     private int place_id;
@@ -10,11 +11,24 @@ public class Place {
     private String description;
     private String pic;
     private boolean likeox;
+    private double distance = 0;
+    private int visiters =0;
 
 
     public Place() { }
 
     public Place(int place_id, String name, double latitude, double longitude){};
+    public Place(int place_id,String name,double latitude, double longitude,String location,String time, String description,String pic, boolean likeox){
+        this.place_id=place_id;
+        this.name=name;
+        this.latitude=latitude;
+        this.longitude=longitude;
+        this.location=location;
+        this.time=time;
+        this.description=description;
+        this.pic=pic;
+        this.likeox=likeox;
+    }
 
     public int getPlace_id() {
         return place_id;
@@ -32,15 +46,6 @@ public class Place {
         this.name = name;
     }
 
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -55,6 +60,14 @@ public class Place {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getTime() {
@@ -88,4 +101,19 @@ public class Place {
     public void setLikeox(boolean likeox) {
         this.likeox = likeox;
     }
+
+    public void setDistance(double distance){
+        this.distance=distance;
+    }
+
+    public double getDistance(){
+        return distance;
+    }
+
+    public int getVisiters(){ return visiters; }
+
+    public void setVisiters(int visiters){ this.visiters=visiters;}
+
+
+
 }

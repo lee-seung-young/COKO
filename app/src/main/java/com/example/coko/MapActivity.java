@@ -11,10 +11,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -45,6 +48,8 @@ public class MapActivity extends AppCompatActivity
 
     double gpsLatitude;
     double gpsLongitude;
+
+    private ArrayList<Place> places;
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -91,10 +96,11 @@ public class MapActivity extends AppCompatActivity
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
+        // 실내일 때 유용
+        //tmapgps.setProvider(tmapgps.GPS_PROVIDER); //gps로 현 위치를 잡습니다.
         tmapgps.OpenGps();
 
-
-        //화면중심을 단말의 현재위치로 이동
+        /*화면중심을 단말의 현재위치로 이동*/
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
 
@@ -141,7 +147,10 @@ public class MapActivity extends AppCompatActivity
             item1.setTMapPoint(point);
             item1.setName(markName);
             item1.setVisible(item1.VISIBLE);
+
             item1.setIcon(bitmap);
+
+            //bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(markName);
@@ -250,8 +259,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint(58, "플레이아쿠아리움", 37.49976, 126.743402));
         m_mapPoint.add(new MapPoint(59, "만안교", 37.414154, 126.91188));
         m_mapPoint.add(new MapPoint(60, "현충원", 37.503812, 126.975519));
-
-
+        
     }
 
 }

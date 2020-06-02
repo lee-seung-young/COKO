@@ -1,7 +1,9 @@
 package com.example.coko;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapData;
@@ -33,6 +36,8 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -46,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
     private Button likeslist;
     private Button placeinfo;
 
+    private Button btn_map3;
+
+    private TextView txtResult;
+    public double longitude; //ListSortingActivity에서 쓸 변수
+    public double latitude; //listSortingActivity에서 쓸 변수
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         btn_map1=findViewById(R.id.btn_map1);
         btn_map2=findViewById(R.id.btn_map2);
+        btn_map3=findViewById(R.id.btn_map3);
 
         likeslist = findViewById(R.id.button_likeslist);
         placeinfo = findViewById(R.id.button_placeinfo);
@@ -69,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent2=new Intent(MainActivity.this,PathActivity.class);
                 startActivity(intent2);
+            }
+        });
+        btn_map3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent3=new Intent(MainActivity.this,ListSortingActivity.class);
+                startActivity(intent3);
             }
         });
         likeslist.setOnClickListener(new View.OnClickListener() {
