@@ -11,10 +11,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -136,6 +139,7 @@ public class MapActivity extends AppCompatActivity
             bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             final String markName = m_mapPoint.get(i).getName();
+            int place_num = m_mapPoint.get(i).getPlace_id();
 
             item1.setTMapPoint(point);
             item1.setName(markName);
@@ -150,6 +154,7 @@ public class MapActivity extends AppCompatActivity
             item1.setAutoCalloutVisible(false);
 
             Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
+
             item1.setCalloutRightButtonImage(bitmap_i);
 
             int place_num = m_mapPoint.get(i).getPlace_id(); //place_id를 place_num으로 가져옴
