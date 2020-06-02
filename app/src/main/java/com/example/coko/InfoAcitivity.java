@@ -22,21 +22,19 @@ public class InfoAcitivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
-    private DatabaseReference reference;
+//    private DatabaseReference reference;
 //    Place place = new Place();
 
     ImageView infoPic;
     TextView infoName, infoAddr, infoTime, infoDescription, heartClick;
     ImageView infoHeart;
 
-    String place_id;
+//    String place_id;
 //    String plcae_name;
-
-
 //    private ListView listView;
 //    private FirebaseDatabase database;
 //    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DatabaseReference databaseReference;
+//    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +56,9 @@ public class InfoAcitivity extends AppCompatActivity {
         infoHeart = (ImageView)findViewById(R.id.heart);
         heartClick = (TextView)findViewById(R.id.click);
 
-
-
         database = FirebaseDatabase.getInstance();
 //        final String placeNum = "place22";
-
 //        placeId = FirebaseDatabase.getInstance().getReference().child("Place").get
-
 //        place_id = FirebaseDatabase.getInstance().getReference().child("Place").child(place_id);
 //        final String id = FirebaseDatabase.getInstance().getReference().child("Place").getKey();
 //        String id = FirebaseDatabase.getInstance()
@@ -73,7 +67,6 @@ public class InfoAcitivity extends AppCompatActivity {
 //        final String placeId = place.concat(place_id);
 //        final String placeId = place.concat("10");
         final String placeId = place.concat(place_id);
-
 
         ref = FirebaseDatabase.getInstance().getReference().child("Place").child(placeId);
         ref.addValueEventListener(new ValueEventListener() {
@@ -99,8 +92,6 @@ public class InfoAcitivity extends AppCompatActivity {
                     infoHeart.setImageResource(R.drawable.full_heart);
                     heartClick.setVisibility(View.INVISIBLE);
                 }
-
-
 
                 infoHeart.setOnClickListener(new View.OnClickListener() {
                     int count = 100;
@@ -139,12 +130,6 @@ public class InfoAcitivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
     }
 
     private void saveData(String name, String location, String pic) {
@@ -154,6 +139,5 @@ public class InfoAcitivity extends AppCompatActivity {
         likesList.put("pic", pic);
         ref.setValue(likesList);
     }
-
 
 }
