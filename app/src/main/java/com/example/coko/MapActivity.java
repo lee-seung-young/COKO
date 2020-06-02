@@ -139,7 +139,6 @@ public class MapActivity extends AppCompatActivity
             bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pin);
 
             final String markName = m_mapPoint.get(i).getName();
-            int place_num = m_mapPoint.get(i).getPlace_id();
 
             item1.setTMapPoint(point);
             item1.setName(markName);

@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ListSortingActivity"></activity>
         <activity android:name=".PathActivity" />
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".InfoAcitivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".LikesActivity"/>
         <activity android:name=".MainActivity">
