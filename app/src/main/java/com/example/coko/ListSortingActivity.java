@@ -29,6 +29,8 @@ public class ListSortingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_sorting);
+
+        /*현재 위치 받아오기 위해서 만듦*/
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -42,7 +44,8 @@ public class ListSortingActivity extends AppCompatActivity {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
         }
-        Log.d("*******","위도: "+ toString().valueOf(latitude));
+
+        //list에 place들 저장
         list.add(new Place(1, "홍대입구", 37.557699, 126.924472, "서울특별시 서교동", "매일 10:00 - 21:00", "홍대입구역은 서울특별시 마포구 양화로에 있는 용산선, 서울 지하철 2호선, 인천국제공항선의 전철역이자 서울 지하철 2호선과 수도권 전철 경의·중앙선, 인천국제공항철도의 환승역이다. 개통 이전에는 동교역이었으나, 인근에 홍익대학교가 있어 현재의 역명을 쓰게 되었다.", null, false));
         list.add(new Place(2, "남산타워", 37.551348, 126.988248, "서울특별시 용산구 용산2가동 남산공원길 105", "매일 10:00 - 23:00", "N서울타워는 대한민국 서울특별시 용산구 용산동 2가 남산 공원 정상 부근에 위치한 전파 송출 및 관광용 타워이다. 1969년에 착공하여 1975년 7월 30일 완공되었다. 높이는 236.7m, 해발 479.7m이다. 수도권의 지상파 방송사들이 이 타워를 이용하여 전파를 송출한다.", null, false));
         list.add(new Place(3, "이태원", 37.539776, 126.991364, "서울특별시 용산구 이태원1동 녹사평대로46길 16", "매일 00:00 - 24:00", "도회적인 분위기의 음식점과 나이트라이프로 유명한 이태원에는 삼겹살집, 고급 비스트로, 심야까지 운영하는 소박한 케밥집이 어우러져 있습니다. 거리에는 DJ들이 힙합과 하우스 음악을 트는 트렌디한 댄스 클럽과 캐주얼한 비어 바, 게이 펍이 늘어서 있습니다. 이태원 앤틱가구 거리에서는 가정용품을 판매하는 독립 상점을 찾아볼 수 있고, 인근에는 탱크와 항공기가 전시된 전쟁기념관이 위치해 있습니다.", null, false));
@@ -53,21 +56,27 @@ public class ListSortingActivity extends AppCompatActivity {
             Log.d("************","place_id"+toString().valueOf(list.get(i).getPlace_id()));
             Log.d("***********","distance"+toString().valueOf(list.get(i).getDistance()));
         }
+        //거리순으로 정렬하고 5개만 list에 남김
         sortByDistance();
+
         for(int i=0;i<list.size();i++){
             Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
                     +" popularity "+toString().valueOf(list.get(i).getVisiters()));
         }
+        //인기순으로 정렬 하고 3개만 list에 남김
         chosenByPopularity();
+
         for(int i=0;i<list.size();i++){
             Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
             +" popularity "+toString().valueOf(list.get(i).getVisiters()));
         }
+        //거리순으로 재정렬
         sortByDistance();
         for(int i=0;i<list.size();i++){
             Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
                     +" popularity "+toString().valueOf(list.get(i).getVisiters()));
         }
+        //정렬된거중 1번째거 return하고 list에서 제거
         Place place=ret_Place();
         Log.d("************","place_id "+toString().valueOf(place.getPlace_id())+" distance "+toString().valueOf(place.getDistance())
                 +" popularity "+toString().valueOf(place.getVisiters()));
@@ -75,6 +84,8 @@ public class ListSortingActivity extends AppCompatActivity {
         this.longitude=place.getLongitude();
         Log.d("*******","위도: "+ toString().valueOf(latitude));
         list.remove(0);
+
+        //거리순으로 정렬
         sortByDistance();
         for(int i=0;i<list.size();i++){
             Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" distance "+toString().valueOf(list.get(i).getDistance())
@@ -82,12 +93,14 @@ public class ListSortingActivity extends AppCompatActivity {
         }
     }
 
+    //list를 편하게 만들기 위한 함수
     public void makeList(ArrayList<Place> list) {
         for (int i = 0; i < list.size(); i++) {
             this.list.add(list.get(i));
         }
     }
 
+    //거리순으로 정렬, 리스트에 5개만 남기기위한 함수
     public void sortByDistance() {
         Iterator<Place> iterator = this.list.iterator();
         double distance = 0;
@@ -111,6 +124,7 @@ public class ListSortingActivity extends AppCompatActivity {
 
     }
 
+    //인기순으로 list정렬하고 3개만 남기고 remove
     public void chosenByPopularity() {
         Iterator<Place> iterator=this.list.iterator();
         int popularity=0;
@@ -130,6 +144,7 @@ public class ListSortingActivity extends AppCompatActivity {
         }
     }
 
+    //현재 위치가 바뀌면 갱신된 좌표를 받기위한 함수
     final LocationListener gpsLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             String provider = location.getProvider();

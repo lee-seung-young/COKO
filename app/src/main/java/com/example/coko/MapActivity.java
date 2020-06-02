@@ -259,8 +259,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint(58, "플레이아쿠아리움", 37.49976, 126.743402));
         m_mapPoint.add(new MapPoint(59, "만안교", 37.414154, 126.91188));
         m_mapPoint.add(new MapPoint(60, "현충원", 37.503812, 126.975519));
-
-
+        
     }
 
 }
