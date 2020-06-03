@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "643213408035",
+    "firebase_url": "https://cokoproject.firebaseio.com",
+    "project_id": "cokoproject",
+    "storage_bucket": "cokoproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643213408035:android:dc53448be4d02f46dd7e96",
+        "android_client_info": {
+          "package_name": "com.example.coko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643213408035-rb1jtqal5jfia54p63us6mh66pnkm0jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coko",
+            "certificate_hash": "3e3400785b4ebd46474b2a650f4b8952d4444670"
+          }
+        },
+        {
+          "client_id": "643213408035-al0qm1u9ipu9v6n7gh4nq9elelnthc5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coko",
+            "certificate_hash": "8d48258e671a7b3f579803859e5c860aef16e44a"
+          }
+        },
+        {
+          "client_id": "643213408035-5tsue88jljqgpt1j0vr2rkbmuf1i8834.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdpR9hrD4-xWl6_L2GgYuX8CjO7oZkRXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643213408035-5tsue88jljqgpt1j0vr2rkbmuf1i8834.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643213408035:android:1f2cbd88c069f9d9dd7e96",
+        "android_client_info": {
+          "package_name": "com.example.cokoproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643213408035-6oc8rugs6879dcol8druekj7g8jej9eu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cokoproject",
+            "certificate_hash": "8d48258e671a7b3f579803859e5c860aef16e44a"
+          }
+        },
+        {
+          "client_id": "643213408035-5tsue88jljqgpt1j0vr2rkbmuf1i8834.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdpR9hrD4-xWl6_L2GgYuX8CjO7oZkRXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643213408035-5tsue88jljqgpt1j0vr2rkbmuf1i8834.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
