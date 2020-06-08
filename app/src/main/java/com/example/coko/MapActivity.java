@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,17 +31,18 @@ import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class MapActivity extends AppCompatActivity
         implements TMapGpsManager.onLocationChangedCallback {
 
     private Context mContext = null;
     private boolean m_bTrackingMode = true;
+    private SearchView mSearchView;
 
     private TMapGpsManager tmapgps = null;
     private TMapView tMapView = null;
     private static String mApiKey = "l7xx84f4860b8e1b4a5a92b716682a24c0b8";
-    private static int mMarkerID;
 
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
@@ -49,18 +51,14 @@ public class MapActivity extends AppCompatActivity
     double gpsLatitude;
     double gpsLongitude;
 
+
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-            TMapPoint pointh = tMapView.getLocationPoint();
-            gpsLatitude = pointh.getLatitude();
-            gpsLongitude = pointh.getLongitude();
-
-            // 거리 구하는 함수 사용 , 현재위치 위도, 경도, 목적지 위도, 경도
-            getDistance distance = new getDistance();
-            double dtresult = distance.getDistance(gpsLatitude, gpsLongitude, 37.582978, 126.983661); //거리 비교 값 dtresult에 저장
-            Log.v("거리", toString().valueOf(dtresult)); // 저장된 결과값 로그로 찍기
+            TMapPoint pointh = tMapView.getLocationPoint(); // 현재 위치 좌표 얻어오기
+            gpsLatitude = pointh.getLatitude(); // 현재 위치 위도
+            gpsLongitude = pointh.getLongitude(); // 현재 위치 경도
         }
     }
 
@@ -76,31 +74,24 @@ public class MapActivity extends AppCompatActivity
         linearLayout.addView(tMapView);
         tMapView.setSKTMapApiKey(mApiKey);
 
-        addPoint();
-        showMarkerPoint();
+        addPoint(); // 마커 좌표 가져오기
+        showMarkerPoint(); // 가져온 좌표로 마커 찍기
 
-        /* 현재 보는 방향 */
-        //tMapView.setCompassMode(true);
+        tMapView.setIconVisibility(true); //현위치 아이콘 표시
 
-        /*현위치 아이콘표시*/
-        tMapView.setIconVisibility(true);
-
-        /*줌레벨*/
-        tMapView.setZoomLevel(12);
+        tMapView.setZoomLevel(12); // 화면 줌레벨
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
-        tmapgps = new TMapGpsManager(MapActivity.this);
+        tmapgps = new TMapGpsManager(MapActivity.this); // 현위치 받기
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
-        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
+        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치 찾기
         tmapgps.OpenGps();
-
 
         //화면중심을 단말의 현재위치로 이동
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
-
 
         // 맵 화면 버튼 3가지 구성
         Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
@@ -125,11 +116,46 @@ public class MapActivity extends AppCompatActivity
             }
         });
 
-    }
+        // 지도에서 검색해서 해당하는 마커를 중심으로 옮기기
+        mSearchView = findViewById(R.id.makersearch);
+        mSearchView.setQueryHint("찾고싶은 관광지를 검색하세요.");
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                double mklong = 0;
+                double mklati = 0;
+                int pid = 0;
+                for (int i = 0; i < m_mapPoint.size(); i++) {
+                    if (s.equals(m_mapPoint.get(i).getName())) {
+                        pid = m_mapPoint.get(i).getPlace_id();
+                    }
+                }
+                pid = pid -1; // i는 0부터 시작하는데 place_id는 1부터 시작해서 맞춰줌
+                if (pid == -1){
+                    Toast myToast = Toast.makeText(getApplicationContext(),
+                            "검색어 "+s+"의 결과를 찾을 수 없습니다.", Toast.LENGTH_SHORT);
+                    myToast.show();
+                }
+                else {
+                    mklong = m_mapPoint.get(pid).getLongitude();
+                    mklati = m_mapPoint.get(pid).getLatitude();
+                    tMapView.setCenterPoint(mklong, mklati, true);
+                    tMapView.setZoomLevel(15);
+                    mSearchView.clearFocus();
+                }
+                return true;
+            }
+            // 우리 앱에서는 사용 안하는 부분, 하지만 지우면 안됨
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // 입력란의 문자열이 바뀔 때 처리
+                return false;
+            }
+        }); // 검색 끝
 
+    } // onCreate 끝
 
-
-    public void showMarkerPoint() { //마커 찍는거
+    public void showMarkerPoint() { //마커 찍는 함수
 
         for (int i = 0; i < m_mapPoint.size(); i++) {
             TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
@@ -144,25 +170,19 @@ public class MapActivity extends AppCompatActivity
             item1.setName(markName);
             item1.setVisible(item1.VISIBLE);
             item1.setIcon(bitmap);
-
-            //풍선뷰 안의 항목에 글을 지정
-            item1.setCalloutTitle(markName);
-
-            //item1.setCalloutSubTitle( ); //서브 타이틀 지정
+            item1.setCalloutTitle(markName); // 풍선뷰 안의 항목에 글을 지정
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(false);
 
             Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.impo1);
-
             item1.setCalloutRightButtonImage(bitmap_i);
 
             int place_num = m_mapPoint.get(i).getPlace_id(); //place_id를 place_num으로 가져옴
             final String strID = String.valueOf(place_num); // place_num을 strID로 저장
             tMapView.addMarkerItem(strID, item1);
             mArrayMarkerID.add(strID);
-//            Log.v("sadasda id",strID); strID 로그로 확인
-
         }
+
         //마커풍선에서 터치(우측 버튼 클릭)시 할 행동 -> 팝업 띄우기, 2가지 버튼(취소/세부정보)
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
@@ -183,7 +203,6 @@ public class MapActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getApplicationContext(), InfoAcitivity.class);
                         intent.putExtra("place_id", markerItem.getID());
-//                        Log.v("#######id", markerItem.getID()); // 로그로 id 확인
                         startActivity(intent);
                     }
                 })
@@ -192,7 +211,7 @@ public class MapActivity extends AppCompatActivity
         });
     }
 
-    public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
+    public void addPoint() { // 마커 찍을 좌표의 정보를 배열에 넣기
         m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
         m_mapPoint.add(new MapPoint(2, "남산타워", 37.551348, 126.988248));
         m_mapPoint.add(new MapPoint(3, "이태원", 37.539776, 126.991364));
@@ -202,7 +221,7 @@ public class MapActivity extends AppCompatActivity
         m_mapPoint.add(new MapPoint(7, "한국민속촌", 37.258602, 127.117036));
         m_mapPoint.add(new MapPoint(8, "단국대", 37.32188, 127.126804));
         m_mapPoint.add(new MapPoint(9, "동대문디자인프라자", 37.566925, 127.009408));
-        m_mapPoint.add(new MapPoint(10, "광화문", 37.577978, 126.976288));
+        m_mapPoint.add(new MapPoint(10, "광화문", 37.575292, 126.976775));
         m_mapPoint.add(new MapPoint(11, "에버랜드", 37.29559, 127.202605));
         m_mapPoint.add(new MapPoint(12, "광교호수공원", 37.283217, 127.065992));
         m_mapPoint.add(new MapPoint(13, "물향기수목원", 37.166741, 127.056633));

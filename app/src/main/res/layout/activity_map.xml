@@ -8,39 +8,54 @@
     android:orientation="vertical"
     tools:context=".MapActivity">
 
+    <SearchView
+        android:id="@+id/makersearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </SearchView>
+
     <LinearLayout
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="vertical"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/buttonZoomIn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20dp"
-            android:text="확대"></Button>
+            android:text="확대">
+
+        </Button>
         <Button
             android:id="@+id/buttonZoomOut"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20dp"
-            android:text="축소"></Button>
+            android:text="축소">
+
+        </Button>
         <Button
             android:id="@+id/buttongps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20dp"
-            android:text="현재 위치"></Button>
+            android:text="현재 위치">
+
+        </Button>
     </LinearLayout>
 
 

@@ -160,7 +160,7 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(markName);
-            item1.setCalloutSubTitle(String.valueOf(i+1)); //서브 타이틀 지정
+            item1.setCalloutSubTitle(String.valueOf(i+1));//서브 타이틀 지정
 
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(true);
