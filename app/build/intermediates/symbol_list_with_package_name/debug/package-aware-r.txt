@@ -416,6 +416,7 @@ color bright_foreground_material_light
 color button_material_dark
 color button_material_light
 color colorAccent
+color colorOrange
 color colorPrimary
 color colorPrimaryDark
 color common_google_signin_btn_text_dark
@@ -684,6 +685,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable appmark
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -804,12 +806,9 @@ id blocking
 id bottom
 id btn_map1
 id btn_map2
-id btn_map3
 id buttonPanel
 id buttonZoomIn
 id buttonZoomOut
-id button_likeslist
-id button_placeinfo
 id buttongps
 id center_vertical
 id chains
@@ -865,6 +864,7 @@ id line3
 id listMode
 id list_item
 id lists
+id makersearch
 id mapview
 id message
 id middle

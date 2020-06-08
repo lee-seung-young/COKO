@@ -1,50 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.widget.LinearLayout
+    <android.widget.RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/appmark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_map2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="바로 경로 추천"
+            android:layout_marginTop="50dp"
+            android:textSize="@android:dimen/app_icon_size" />
 
         <Button
             android:id="@+id/btn_map1"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:text="지도 보기"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_map2"
+            android:layout_marginTop="20dp"
+            android:text="관광 정보 검색"
             android:textSize="@android:dimen/app_icon_size" />
 
-        <Button
-            android:id="@+id/btn_map2"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:text="경로보기"
-        android:textSize="@android:dimen/app_icon_size" />
-    <Button
-        android:id="@+id/btn_map3"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:text="주위 관광지 추천"
-        android:textSize="@android:dimen/app_icon_size"/>
+    </LinearLayout>
 
-//주석처리
+<!--    <Button-->
+<!--        android:id="@+id/btn_map3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="주위 관광지 추천"-->
+<!--        android:textSize="@android:dimen/app_icon_size" />-->
 
+<!--    <Button-->
+<!--        android:id="@+id/button_likeslist"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="찜하기 목록 보기"-->
+<!--        android:textSize="25dp"-->
+<!--        />-->
 
-    <Button
-        android:id="@+id/button_likeslist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="찜하기 목록 보기"
-        android:textSize="25dp"
-        />
-
-
-    <Button
-        android:id="@+id/button_placeinfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="관광지 정보 보기"
-        android:textSize="25dp"
-        />
-
-</android.widget.LinearLayout>
+</android.widget.RelativeLayout>

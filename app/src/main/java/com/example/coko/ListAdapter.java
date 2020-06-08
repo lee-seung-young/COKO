@@ -1,17 +1,21 @@
 package com.example.coko;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
@@ -19,7 +23,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private Context context;
     private ArrayList<LikesInfo> arrayList;
     private OnItemClickListener mListener;
-
+    private FirebaseDatabase database;
 
     interface OnItemClickListener{
         void onItemClick(int position);
@@ -48,15 +52,44 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final ListAdapter.ListViewHolder holder, final int position) {
-//        holder.info = g
-
-//        LikesInfo info = arrayList. get(position);
-
         Picasso.get().load(arrayList.get(position).getPic()).into(holder.pic);
         holder.name.setText(arrayList.get(position).getName());
         holder.location.setText(arrayList.get(position).getLocation());
- 
-    }
+
+        database = FirebaseDatabase.getInstance();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("찜목록 삭제")
+                        .setMessage("정말로 삭제하시겠습니까?")
+                        .setCancelable(true)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                arrayList.remove(position);
+
+                                Log.d("******", String.valueOf(position));
+//                                int count =  position;
+                                String addNum = "likes" + (position+1);
+//                                database.getReference().child("Likes").child(addNum).removeValue();
+                                database.getReference().child("Likes").child(addNum).removeValue();
+//                                database.getReference().removeValue();
+                                notifyItemChanged(position);
+
+                            }
+                        });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+            }
+        });}
 
     @Override
     public int getItemCount() {
@@ -87,11 +120,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             });
 
         }
-
-
-
-
-
     }
 
 }

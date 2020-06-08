@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable_appmark.png.flat",
+        "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\src\\main\\res\\drawable\\appmark.png"
+    },
+    {
         "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_launcher_background.xml.flat",
         "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_launcher_background.xml"
     },
