@@ -24,12 +24,12 @@
         "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\src\\main\\res\\drawable-v24\\impo1.png"
     },
     {
-        "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher_background.png.flat",
-        "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_launcher_background.png"
-    },
-    {
         "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_list_sorting.xml.flat",
         "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\src\\main\\res\\layout\\activity_list_sorting.xml"
+    },
+    {
+        "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_launcher_background.png"
     },
     {
         "merged": "C:\\Users\\seungsu\\AndroidStudioProjects\\COKO\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_likes_list.xml.flat",

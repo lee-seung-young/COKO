@@ -29,6 +29,8 @@ public class InfoAcitivity extends AppCompatActivity {
     TextView infoName, infoAddr, infoTime, infoDescription, heartClick;
     ImageView infoHeart;
 
+
+    int count;
 //    String place_id;
 //    String plcae_name;
 //    private ListView listView;
@@ -94,13 +96,14 @@ public class InfoAcitivity extends AppCompatActivity {
                 }
 
                 infoHeart.setOnClickListener(new View.OnClickListener() {
-                    int count = 100;
-                    String addNum = "likes" + (count);
 
+//                    String addNum = "likes" + count;
+                    String addNum = "";
                     @Override
                     public void onClick(View view) {
                         if(!likeox){
                             count += 1;
+                            addNum = "likes" + count;
                             infoHeart.setImageResource(R.drawable.full_heart);
                             heartClick.setVisibility(View.INVISIBLE);
                             database.getReference().child("Place").child(placeId).child("likeox").setValue(true);
