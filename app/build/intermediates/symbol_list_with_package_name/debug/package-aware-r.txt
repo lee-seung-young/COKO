@@ -809,6 +809,7 @@ id btn_map2
 id buttonPanel
 id buttonZoomIn
 id buttonZoomOut
+id button_likeslist
 id buttongps
 id center_vertical
 id chains

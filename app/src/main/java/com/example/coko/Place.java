@@ -2,80 +2,26 @@ package com.example.coko;
 
 public class Place {
 
-    private int place_id;
-    private String  name;
-    private double latitude;
-    private double longitude;
-    private String location;
-    private String time;
     private String description;
-    private String pic;
+    private double latitude;
     private boolean likeox;
-    private double distance = 0;
-    private int visiters =0;
+    private String location;
+    private double longitude;
+    private String name;
+    private String pic;
+    private long place_id;
+    private String time;
+    private long visitors;
+    public double distance;
 
-
-    public Place() { }
-
-    public Place(int place_id, String name, double latitude, double longitude){};
-    public Place(int place_id,String name,double latitude, double longitude,String location,String time, String description,String pic, boolean likeox){
-        this.place_id=place_id;
-        this.name=name;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.location=location;
-        this.time=time;
-        this.description=description;
-        this.pic=pic;
-        this.likeox=likeox;
+    public Place() {
     }
 
-    public int getPlace_id() {
-        return place_id;
-    }
-
-    public void setPlace_id(int place_id) {
-        this.place_id = place_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
+    public Place(int place_id, String name, double latitude, double longitude ) {
         this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+        this.name = name;
+        this.place_id = place_id;
     }
 
     public String getDescription() {
@@ -86,12 +32,12 @@ public class Place {
         this.description = description;
     }
 
-    public String getPic() {
-        return pic;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public boolean isLikeox() {
@@ -102,18 +48,67 @@ public class Place {
         this.likeox = likeox;
     }
 
-    public void setDistance(double distance){
-        this.distance=distance;
+    public String getLocation() {
+        return location;
     }
 
-    public double getDistance(){
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public long getPlace_id() {
+        return place_id;
+    }
+
+    public void setPlace_id(long place_id) {
+        this.place_id = place_id;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public long getVisitors() {
+        return visitors;
+    }
+
+    public void setVisitors(long visitors) {
+        this.visitors = visitors;
+    }
+
+    public double getDistance() {
         return distance;
     }
 
-    public int getVisiters(){ return visiters; }
-
-    public void setVisiters(int visiters){ this.visiters=visiters;}
-
-
-
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 }

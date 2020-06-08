@@ -24,6 +24,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
@@ -59,16 +64,48 @@ public class MainActivity extends AppCompatActivity {
     public double latitude; //listSortingActivity에서 쓸 변수
     public static Context context;
 
+    //add Firebase Database stuff
+    private FirebaseDatabase  FirebaseDatabase;
+    private DatabaseReference rootRef=FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference yourRef=rootRef.child("Place");
+    ValueEventListener eventListener;
+    ArrayList<Place> list=new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        readData(new FirebaseCallback() {
+            @Override
+            public void onCallback(List<Place> places) {
+                checkList();
+                //Sort sort=new Sort(list,latitude,longitude);
+                // sort.Sort();
+            }
+        });
+
+        /*현재 위치 받아오기 위해서 만듦*/
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        } else {
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
+        }
+
         btn_map1 = findViewById(R.id.btn_map1);
         btn_map2 = findViewById(R.id.btn_map2);
 //        btn_map3=findViewById(R.id.btn_map3);
 
-//        likeslist = findViewById(R.id.button_likeslist);
+        likeslist = findViewById(R.id.button_likeslist);
 //        placeinfo = findViewById(R.id.button_placeinfo);
 
         btn_map1.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +129,13 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intent3);
 //            }
 //        });
-//        likeslist.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, LikesActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        likeslist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LikesActivity.class);
+                startActivity(intent);
+            }
+        });
 //        placeinfo.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -120,6 +157,58 @@ public class MainActivity extends AppCompatActivity {
         }
 // OS가 Marshmallow 이전일 경우 권한체크를 하지 않는다.
         else {
+        }
+    }
+
+    //데이터 베이스에서 데이터를 가져오는 메소드
+    public void readData(final FirebaseCallback firebaseCallback){
+        eventListener = yourRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dSnapshot : dataSnapshot.getChildren()) {
+                    Place place = dSnapshot.getValue(Place.class);
+                    list.add(place);
+                }
+                firebaseCallback.onCallback(list);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    //Firebase가 데이터를 반환 할때까지 기다리는 콜백
+    public interface FirebaseCallback{
+        void onCallback(List<Place> places);
+    }
+    //현재 위치가 바뀌면 갱신된 좌표를 받기위한 함수
+    final LocationListener gpsLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            String provider = location.getProvider();
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+    private void checkList() {
+        for(int i=0;i<this.list.size();i++){
+            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" popularity "+toString().valueOf(list.get(i).getVisitors()));
         }
     }
 }
