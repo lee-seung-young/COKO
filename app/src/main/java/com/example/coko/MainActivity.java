@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -80,9 +82,41 @@ public class MainActivity extends AppCompatActivity {
         readData(new FirebaseCallback() {
             @Override
             public void onCallback(List<Place> places) {
+                btn_map2 = findViewById(R.id.btn_map2);
+
+                Sort sort=new Sort(list,latitude,longitude);
+                sort.Sort();
                 checkList();
-                //Sort sort=new Sort(list,latitude,longitude);
-                // sort.Sort();
+                btn_map2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent2 = new Intent(MainActivity.this, PathActivity.class);
+                        intent2.putExtra("latitude0",list.get(0).getLatitude());
+                        intent2.putExtra("longitude0",list.get(0).getLongitude());
+                        intent2.putExtra("placeid0",list.get(0).getPlace_id());
+                        intent2.putExtra("name0",list.get(0).getName());
+                        intent2.putExtra("latitude1",list.get(1).getLatitude());
+                        intent2.putExtra("longitude1",list.get(1).getLongitude());
+                        intent2.putExtra("placeid1",list.get(1).getPlace_id());
+                        intent2.putExtra("name1",list.get(1).getName());
+                        intent2.putExtra("latitude2",list.get(2).getLatitude());
+                        intent2.putExtra("longitude2",list.get(2).getLongitude());
+                        intent2.putExtra("placeid2",list.get(2).getPlace_id());
+                        intent2.putExtra("name2",list.get(2).getName());
+                        intent2.putExtra("latitude3",list.get(3).getLatitude());
+                        intent2.putExtra("longitude3",list.get(3).getLongitude());
+                        intent2.putExtra("placeid3",list.get(3).getPlace_id());
+                        intent2.putExtra("name3",list.get(3).getName());
+                        intent2.putExtra("latitude4",list.get(4).getLatitude());
+                        intent2.putExtra("longitude4",list.get(4).getLongitude());
+                        intent2.putExtra("placeid4",list.get(4).getPlace_id());
+                        intent2.putExtra("name4",list.get(4).getName());
+                        startActivity(intent2);
+                    }
+                });
+
+
+
             }
         });
 
@@ -102,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         btn_map1 = findViewById(R.id.btn_map1);
-        btn_map2 = findViewById(R.id.btn_map2);
+//        btn_map2 = findViewById(R.id.btn_map2);
 //        btn_map3=findViewById(R.id.btn_map3);
 
         likeslist = findViewById(R.id.button_likeslist);
@@ -115,13 +149,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent1); //액티비티 이동
             }
         });
-        btn_map2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, PathActivity.class);
-                startActivity(intent2);
-            }
-        });
+//        btn_map2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent2 = new Intent(MainActivity.this, PathActivity.class);
+//                startActivity(intent2);
+//            }
+//        });
 //        btn_map3.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View v){
@@ -208,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
     };
     private void checkList() {
         for(int i=0;i<this.list.size();i++){
-            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" popularity "+toString().valueOf(list.get(i).getVisitors()));
+            Log.d("************","name "+toString().valueOf(list.get(i).getName())+" visitors "+toString().valueOf(list.get(i).getVisitors())+ " distance "+toString().valueOf(list.get(i).getDistance()));
         }
     }
 }
