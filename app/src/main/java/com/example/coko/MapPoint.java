@@ -18,6 +18,7 @@ public class MapPoint {
         this.Place_id = place_id;
     }
 
+
     public int getPlace_id() {
         return Place_id;
     }

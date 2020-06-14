@@ -45,6 +45,11 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
     double gpsLongitude;
     TMapData tmapdata = null;
 
+    double latitude_array[]=new double[5];
+    double longitude_array[]=new double[5];
+    String name_array[]=new String[5];
+    int placeid_array[]=new int[5];
+
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
@@ -52,97 +57,78 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             TMapPoint pointh = tMapView.getLocationPoint();
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
-            //GetCarPath(new TMapPoint(gpsLatitude, gpsLongitude), new TMapPoint(38.079666, 128.447609)); 경로 1개
+            Intent secondIntent=getIntent();
+            double latitude0=secondIntent.getDoubleExtra("latitude0",0);
+            double longitude0=secondIntent.getDoubleExtra("longitude0",0);
+            String name0=secondIntent.getStringExtra("name0");
+            int placeid0= (int) secondIntent.getLongExtra("placeid0",0);
+            double latitude1=secondIntent.getDoubleExtra("latitude1",0);
+            double longitude1=secondIntent.getDoubleExtra("longitude1",0);
+            String name1=secondIntent.getStringExtra("name1");
+            int placeid1= (int) secondIntent.getLongExtra("placeid1",0);
+            double latitude2=secondIntent.getDoubleExtra("latitude2",0);
+            double longitude2= secondIntent.getDoubleExtra("longitude2",0);
+            String name2=secondIntent.getStringExtra("name2");
+            int placeid2= (int) secondIntent.getLongExtra("placeid2",0);
+            double latitude3=secondIntent.getDoubleExtra("latitude3",0);
+            double longitude3=secondIntent.getDoubleExtra("longitude3",0);
+            String name3=secondIntent.getStringExtra("name3");
+            int placeid3= (int) secondIntent.getLongExtra("placeid3",0);
+            double latitude4=secondIntent.getDoubleExtra("latitude4",0);
+            double longitude4=secondIntent.getDoubleExtra("longitude4",0);
+            String name4=secondIntent.getStringExtra("name4");
+            int placeid4= (int) secondIntent.getLongExtra("placeid4",0);
+
+            for(int i=0;i<5;i++)
+            {
+                if(i==0){
+                    latitude_array[i]=latitude0;
+                    longitude_array[i]=longitude0;
+                    name_array[i]=name0;
+                    placeid_array[i]=(int)placeid0;
+                }
+                if(i==1){
+                    latitude_array[i]=latitude1;
+                    longitude_array[i]=longitude1;
+                    name_array[i]=name1;
+                    placeid_array[i]=(int)placeid1;
+                }
+                if(i==2){
+                    latitude_array[i]=latitude2;
+                    longitude_array[i]=longitude2;
+                    name_array[i]=name2;
+                    placeid_array[i]=(int)placeid2;
+                }
+                if(i==3){
+                    latitude_array[i]=latitude3;
+                    longitude_array[i]=longitude3;
+                    name_array[i]=name3;
+                    placeid_array[i]=(int)placeid3;
+                }
+                if(i==4){
+                    latitude_array[i]=latitude4;
+                    longitude_array[i]=longitude4;
+                    name_array[i]=name4;
+                    placeid_array[i]=(int)placeid4;
+                }
+
+            }
+
             FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView); // 다중 경로화 함수 선언
             // 다중 경로화
             findCarPathTask.execute(new TMapPoint(gpsLatitude,gpsLongitude),
-                    new TMapPoint(37.521038, 127.121592),
-                    new TMapPoint(37.511365, 127.098108),
-                    new TMapPoint(37.539776, 126.991364),
-                    new TMapPoint(37.52864, 126.934258),
-                    new TMapPoint(37.557699, 126.924472));
+                    new TMapPoint(latitude0,longitude0),
+                    new TMapPoint(latitude1,longitude1),
+                    new TMapPoint(latitude2,longitude2),
+                    new TMapPoint(latitude3,longitude3),
+                    new TMapPoint(latitude4,longitude4));
         }
-    }
+        m_mapPoint.add(new MapPoint(placeid_array[0], name_array[0], latitude_array[0], longitude_array[0]));
+        m_mapPoint.add(new MapPoint(placeid_array[1], name_array[1], latitude_array[1], longitude_array[1]));
+        m_mapPoint.add(new MapPoint(placeid_array[2], name_array[2], latitude_array[2], longitude_array[2]));
+        m_mapPoint.add(new MapPoint(placeid_array[3], name_array[3], latitude_array[3], longitude_array[3]));
+        m_mapPoint.add(new MapPoint(placeid_array[4], name_array[4], latitude_array[4], longitude_array[4]));
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_path);
-
-        mContext = this;
-
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mapview);
-        tMapView = new TMapView(this);
-        linearLayout.addView(tMapView);
-        tMapView.setSKTMapApiKey(mApiKey);
-        addPoint();
-        showMarkerPoint();
-
-        /*현위치 아이콘표시*/
-        tMapView.setIconVisibility(true);
-
-        /*줌레벨*/
-        tMapView.setZoomLevel(13);
-        tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
-        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
-
-        tmapgps = new TMapGpsManager(PathActivity.this);
-        tmapgps.setMinTime(0);
-        tmapgps.setMinDistance(5);
-        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
-        tmapgps.OpenGps();
-
-
-        /*화면중심을 단말의 현재위치로 이동*/
-        tMapView.setTrackingMode(true);
-        tMapView.setSightVisible(true);
-
-        // 맵 화면 버튼 3가지 구성
-        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
-        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.MapZoomIn();
-            }
-        });
-        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut); // 축소 버튼
-        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.MapZoomOut();
-            }
-        });
-        Button buttongps = (Button)findViewById(R.id.buttongps); // 현재위치로 화면을 옮기는 버튼
-        buttongps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
-            }
-        });
-
-    }
-
-    /*차로가는 경로 보여주는 함수*/
-    void GetCarPath(TMapPoint startPoint, TMapPoint endPoint) {
-        tmapdata = new TMapData();
-        tmapdata.findPathData(startPoint, endPoint, new TMapData.FindPathDataListenerCallback() {
-            @Override
-            public void onFindPathData(TMapPolyLine polyLine) {
-                tMapView.addTMapPath(polyLine);
-            }
-        });
-    }
-
-    public void addPoint() { //여기에 핀을 꼽을 포인트들을 배열에 add해주세요!
-
-        m_mapPoint.add(new MapPoint(16, "올림픽공원", 37.521038, 127.121592));
-        m_mapPoint.add(new MapPoint(6, "롯데월드", 37.511365, 127.098108));
-        m_mapPoint.add(new MapPoint(3, "이태원", 37.539776, 126.991364));
-        m_mapPoint.add(new MapPoint(14, "여의도한강공원", 37.52864, 126.934258));
-        m_mapPoint.add(new MapPoint(1, "홍대입구", 37.557699, 126.924472));
-    }
-
-    public void showMarkerPoint() { //마커 찍는거
         for (int i = 0; i < m_mapPoint.size(); i++) {
             TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
                     m_mapPoint.get(i).getLongitude());
@@ -202,7 +188,77 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
                         .show();
             }
         });
+        for(int i=0;i<5;i++) {
+            Log.d("************", "place_id " + toString().valueOf(placeid_array[i]) + " name " + name_array[i] + " distance " + toString().valueOf(latitude_array[i]) + " longitude " + toString().valueOf(longitude_array[i]));
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_path);
+
+        mContext = this;
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mapview);
+        tMapView = new TMapView(this);
+        linearLayout.addView(tMapView);
+        tMapView.setSKTMapApiKey(mApiKey);
+
+        /*현위치 아이콘표시*/
+        tMapView.setIconVisibility(true);
+
+        /*줌레벨*/
+        tMapView.setZoomLevel(13);
+        tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
+        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
+
+        tmapgps = new TMapGpsManager(PathActivity.this);
+        tmapgps.setMinTime(0);
+        tmapgps.setMinDistance(5);
+        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
+        tmapgps.OpenGps();
+
+
+        /*화면중심을 단말의 현재위치로 이동*/
+        tMapView.setTrackingMode(true);
+        tMapView.setSightVisible(true);
+
+        // 맵 화면 버튼 3가지 구성
+        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
+        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomIn();
+            }
+        });
+        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut); // 축소 버튼
+        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomOut();
+            }
+        });
+        Button buttongps = (Button)findViewById(R.id.buttongps); // 현재위치로 화면을 옮기는 버튼
+        buttongps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
+            }
+        });
 
     }
+
+    /*차로가는 경로 보여주는 함수*/
+    void GetCarPath(TMapPoint startPoint, TMapPoint endPoint) {
+        tmapdata = new TMapData();
+        tmapdata.findPathData(startPoint, endPoint, new TMapData.FindPathDataListenerCallback() {
+            @Override
+            public void onFindPathData(TMapPolyLine polyLine) {
+                tMapView.addTMapPath(polyLine);
+            }
+        });
+    }
+
 
 }
