@@ -5,17 +5,17 @@ public class LikesInfo {
     private String pic;
     private String name;
     private String location;
-    private int place_id;
+    private String place_id;
 
-    public int getPlace_id() {
+    public LikesInfo(){}
+
+    public  String getPlace_id() {
         return place_id;
     }
 
-    public void setPlace_id(int place_id) {
+    public void setPlace_id(String place_id) {
         this.place_id = place_id;
     }
-
-    public LikesInfo(){}
 
     public String getPic() {
         return pic;
