@@ -245,4 +245,5 @@ public class MainActivity extends AppCompatActivity {
             Log.d("************","name "+toString().valueOf(list.get(i).getName())+" visitors "+toString().valueOf(list.get(i).getVisitors())+ " distance "+toString().valueOf(list.get(i).getDistance()));
         }
     }
+    //
 }

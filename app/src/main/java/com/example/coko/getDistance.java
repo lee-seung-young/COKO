@@ -18,6 +18,6 @@ public class getDistance {
 
         distance = (locationA.distanceTo(locationB))/1000; //단위 m에서 km로 변환
         distancemt = Math.round(distance*10000)/10000.0; // 소숫점 4째자리까지 보여줌
-        return distancemt;
+        return distance;
     }
 }
