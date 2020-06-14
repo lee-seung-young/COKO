@@ -11,7 +11,7 @@ public class Sort {
     Descending comp1=new Descending();
     Ascending comp2=new Ascending();
 
-    public Sort(ArrayList<Place> list, double longitude, double latitude) {
+    public Sort(ArrayList<Place> list, double latitude, double longitude) {
         this.list = list;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -37,16 +37,20 @@ public class Sort {
        }
     }
 
-    public void sortByPopularity() {
+    public void sortByPopularity(int x) {
         Iterator<Place> iterator=this.list.iterator();
 
         Collections.sort(this.list,comp2);
+        while(list.size()>x){
+            list.remove(list.size()-1);
+        }
 
     }
 
     public void Sort(){
         sortByDistance(10);
-        sortByPopularity();
+        sortByPopularity(5);
         sortByDistance(5);
     }
+    //
 }

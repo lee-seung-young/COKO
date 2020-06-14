@@ -259,6 +259,6 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             }
         });
     }
-
+    //
 
 }
