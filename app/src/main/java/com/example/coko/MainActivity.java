@@ -80,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
         readData(new FirebaseCallback() {
             @Override
             public void onCallback(List<Place> places) {
+                //checkList();
+                Sort sort=new Sort(list,latitude,longitude);
+                list= sort.Sort();
                 checkList();
-                //Sort sort=new Sort(list,latitude,longitude);
-                // sort.Sort();
+
             }
         });
 
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     };
     private void checkList() {
         for(int i=0;i<this.list.size();i++){
-            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" popularity "+toString().valueOf(list.get(i).getVisitors()));
+//            Log.d("************","place_id "+toString().valueOf(list.get(i).getPlace_id())+" popularity "+toString().valueOf(list.get(i).getVisitors()));
         }
     }
 }

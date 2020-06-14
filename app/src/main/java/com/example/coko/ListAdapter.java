@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         this.arrayList = arrayList;
     }
 
+
 //    public ListAdapter(ArrayList<LikesInfo> arrayList){
 //        this.arrayList = arrayList;
 //    }
@@ -57,6 +59,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         holder.location.setText(arrayList.get(position).getLocation());
 
         database = FirebaseDatabase.getInstance();
+        String name = arrayList.get(position).getName();
+        Log.v("********numss1",name);
+//        String numss = arrayList.get(position).getPlace_id();
+//        Log.v("*****numss2", numss);
+        String likes = "likes";
+        final String addlikes = likes.concat(name);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +79,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
                                 arrayList.remove(position);
 
-                                Log.d("******", String.valueOf(position));
+//                                Log.d("******", String.valueOf(position));
 //                                int count =  position;
-                                String addNum = "likes" + (position+1);
+//                                String addNum = "likes" + (position+1);
 //                                database.getReference().child("Likes").child(addNum).removeValue();
-                                database.getReference().child("Likes").child(addNum).removeValue();
+                                database.getReference().child("Likes").child(addlikes).removeValue();
+//                                database.getReference().child("Place").child(placeId).child("likeox").setValue(false);
 //                                database.getReference().removeValue();
                                 notifyItemChanged(position);
+//                                notifyItemRangeChanged(0, arrayList.size());
 
+                                notifyItemRangeRemoved(0, arrayList.size());
                             }
                         });
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
