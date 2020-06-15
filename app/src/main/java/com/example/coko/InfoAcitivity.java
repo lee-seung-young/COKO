@@ -23,30 +23,17 @@ public class InfoAcitivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference ref;
 
-//    long count = 0;
     ImageView infoPic;
     TextView infoName, infoAddr, infoTime, infoDescription, heartClick;
     ImageView infoHeart;
-
-//    String place_id;
-//    String plcae_name;
-//    private ListView listView;
-//    private FirebaseDatabase database;
-//    FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-
-//        place_id = getIntent().getStringExtra(place_id);
-//        place_name = getIntent().getStringExtra("place_name");
         Intent i = getIntent();
         final String place_id = i.getStringExtra("place_id");
-
-//        place_id = "22";
 
         infoPic = (ImageView) findViewById(R.id.info_pic);
         infoName = (TextView) findViewById(R.id.info_name);
@@ -57,15 +44,8 @@ public class InfoAcitivity extends AppCompatActivity {
         heartClick = (TextView)findViewById(R.id.click);
 
         database = FirebaseDatabase.getInstance();
-//        final String placeNum = "place22";
-//        placeId = FirebaseDatabase.getInstance().getReference().child("Place").get
-//        place_id = FirebaseDatabase.getInstance().getReference().child("Place").child(place_id);
-//        final String id = FirebaseDatabase.getInstance().getReference().child("Place").getKey();
-//        String id = FirebaseDatabase.getInstance()
 
         String place = "place";
-//        final String placeId = place.concat(place_id);
-//        final String placeId = place.concat("10");
         final String placeId = place.concat(place_id);
 
         ref = FirebaseDatabase.getInstance().getReference().child("Place").child(placeId);
@@ -79,10 +59,9 @@ public class InfoAcitivity extends AppCompatActivity {
                 final boolean likeox = (Boolean)dataSnapshot.child("likeox").getValue();
                 final String picUrl = dataSnapshot.child("pic").getValue().toString();
 
-
-//                 for(DataSnapshot snap : dataSnapshot.getChildren()){
-//                     ss = snap.getChildrenCount();
-//                 }
+                final long place_num = (long) dataSnapshot.child("place_id").getValue();
+                final double latitude = (double) dataSnapshot.child("latitude").getValue();
+                final double longitude = (double) dataSnapshot.child("longitude").getValue();
 
                 Picasso.get().load(picUrl).into(infoPic);
                 infoName.setText(name);
@@ -98,18 +77,14 @@ public class InfoAcitivity extends AppCompatActivity {
                     heartClick.setVisibility(View.INVISIBLE);
                 }
 
-
-//                long counter = 0;
                 infoHeart.setOnClickListener(new View.OnClickListener() {
-                    //                    int count = 100;
-//                    String addNum = "likes" + (ss+1);
+
                     String addNum = "likes";
                     @Override
                     public void onClick(View view) {
                         if(!likeox){
-//                            count += 1;
-//                            String addNum1 =  addNum.concat(String.valueOf(count));
-                            String addNum1 =  addNum.concat(name);
+
+                            String addNum1 =  addNum.concat(place_id);
 
                             infoHeart.setImageResource(R.drawable.full_heart);
                             heartClick.setVisibility(View.INVISIBLE);
@@ -121,12 +96,15 @@ public class InfoAcitivity extends AppCompatActivity {
                             likesList.put("name", name);
                             likesList.put("location", location);
                             likesList.put("pic", picUrl);
-//                            likesList.put("placeid",place_id);
+                            likesList.put("place_id",String.valueOf(place_num));
+                            likesList.put("latitude", String.valueOf(latitude));
+                            likesList.put("longitude", String.valueOf(longitude));
+
                             database.getReference().child("Likes").child(addNum1).setValue(likesList);
 
                         } else {
-//                            String addNum2 = addNum.concat(String.valueOf(count));
-                            String addNum2 = addNum.concat(name);
+
+                            String addNum2 = addNum.concat(place_id);
                             infoHeart.setImageResource(R.drawable.empty_heart);
                             heartClick.setVisibility(View.VISIBLE);
                             database.getReference().child("Place").child(placeId).child("likeox").setValue(false);
@@ -143,14 +121,4 @@ public class InfoAcitivity extends AppCompatActivity {
             }
         });
     }
-
-    private void saveData(String name, String location, String pic, String placeid) {
-        HashMap<String, String> likesList = new HashMap<>();
-        likesList.put("name", name);
-        likesList.put("location", location);
-        likesList.put("pic", pic);
-        likesList.put("placeid",placeid);
-        ref.setValue(likesList);
-    }
-
 }
