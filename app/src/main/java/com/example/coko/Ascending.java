@@ -10,11 +10,11 @@ public class Ascending implements Comparator<Place> {
 
         //오름차순 정렬
         if(firstValue>secondValue){
-            return -1;
+            return 1;
         }
         else if(firstValue<secondValue)
         {
-            return 1;
+            return -1;
         }
         else
             return 0;

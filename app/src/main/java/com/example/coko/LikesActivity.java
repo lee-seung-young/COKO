@@ -1,5 +1,6 @@
 package com.example.coko;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +32,10 @@ LikesActivity extends AppCompatActivity  {
     private FirebaseDatabase database;
     private DatabaseReference ref;
     private Button goPath;
+    private double latitude;
+    private double longitude;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,18 +71,40 @@ LikesActivity extends AppCompatActivity  {
         adapter = new ListAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
 
-
         goPath = (Button) findViewById(R.id.gopath);
         goPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(LikesActivity.class, InfoAcitivity.class );
-//                intent.putExtra("place_id", placeid);
-//                startActivity(intent);
+                Intent intent=getIntent();
+                longitude=intent.getDoubleExtra("longitude",0);
+                latitude=intent.getDoubleExtra("latitude",0);
+                ArrayList <Place> list=new ArrayList<Place>();
+
+                for(int i=0;i<arrayList.size();i++){
+                    Place place=new Place(new Integer(arrayList.get(i).getPlace_id()),arrayList.get(i).getName(),
+                            new Double(arrayList.get(i).getLatitude()),new Double(arrayList.get(i).getLongitude()));
+                    list.add(place);
+                }
+                Log.d("************","latitude "+toString().valueOf(latitude)+" longitude "+toString().valueOf(longitude));
+
+                Sort sort=new Sort(list,latitude,longitude,arrayList.size());
+                list=sort.Sort2();
+                for(int i=0;i<list.size();i++)
+                Log.d("************","name "+toString().valueOf(list.get(i).getName())+" distance "+toString().valueOf(list.get(i).getDistance()));
+
+                Intent intent2 = new Intent(LikesActivity.this, PathActivity.class);
+                for(int i=0;i<list.size();i++){
+                    intent2.putExtra("latitude"+i,list.get(i).getLatitude());
+                    intent2.putExtra("longitude"+i,list.get(i).getLongitude());
+                    intent2.putExtra("placeid"+i,list.get(i).getPlace_id());
+                    intent2.putExtra("name"+i,list.get(i).getName());
+                }
+                intent2.putExtra("size",arrayList.size());
+                startActivity(intent2);
             }
         });
 
-
     }
+
 
 }

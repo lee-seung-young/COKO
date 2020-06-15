@@ -85,38 +85,23 @@ public class MainActivity extends AppCompatActivity {
                 btn_map2 = findViewById(R.id.btn_map2);
 
                 Sort sort=new Sort(list,latitude,longitude);
-                sort.Sort();
-                checkList();
+                list=sort.Sort1();
+                //checkList();
                 btn_map2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent2 = new Intent(MainActivity.this, PathActivity.class);
-                        intent2.putExtra("latitude0",list.get(0).getLatitude());
-                        intent2.putExtra("longitude0",list.get(0).getLongitude());
-                        intent2.putExtra("placeid0",list.get(0).getPlace_id());
-                        intent2.putExtra("name0",list.get(0).getName());
-                        intent2.putExtra("latitude1",list.get(1).getLatitude());
-                        intent2.putExtra("longitude1",list.get(1).getLongitude());
-                        intent2.putExtra("placeid1",list.get(1).getPlace_id());
-                        intent2.putExtra("name1",list.get(1).getName());
-                        intent2.putExtra("latitude2",list.get(2).getLatitude());
-                        intent2.putExtra("longitude2",list.get(2).getLongitude());
-                        intent2.putExtra("placeid2",list.get(2).getPlace_id());
-                        intent2.putExtra("name2",list.get(2).getName());
-                        intent2.putExtra("latitude3",list.get(3).getLatitude());
-                        intent2.putExtra("longitude3",list.get(3).getLongitude());
-                        intent2.putExtra("placeid3",list.get(3).getPlace_id());
-                        intent2.putExtra("name3",list.get(3).getName());
-                        intent2.putExtra("latitude4",list.get(4).getLatitude());
-                        intent2.putExtra("longitude4",list.get(4).getLongitude());
-                        intent2.putExtra("placeid4",list.get(4).getPlace_id());
-                        intent2.putExtra("name4",list.get(4).getName());
+
+                        for(int i=0;i<list.size();i++){
+                            intent2.putExtra("latitude"+i,list.get(i).getLatitude());
+                            intent2.putExtra("longitude"+i,list.get(i).getLongitude());
+                            intent2.putExtra("placeid"+i,list.get(i).getPlace_id());
+                            intent2.putExtra("name"+i,list.get(i).getName());
+                        }
+                        intent2.putExtra("size",list.size());
                         startActivity(intent2);
                     }
                 });
-
-
-
             }
         });
 
@@ -167,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LikesActivity.class);
+                intent.putExtra("latitude",latitude);
+                intent.putExtra("longitude",longitude);
                 startActivity(intent);
             }
         });
@@ -214,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     //Firebase가 데이터를 반환 할때까지 기다리는 콜백
-    public interface FirebaseCallback{
+    private interface FirebaseCallback{
         void onCallback(List<Place> places);
     }
     //현재 위치가 바뀌면 갱신된 좌표를 받기위한 함수
