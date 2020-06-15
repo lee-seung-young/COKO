@@ -45,10 +45,12 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
     double gpsLongitude;
     TMapData tmapdata = null;
 
-    double latitude_array[]=new double[5];
-    double longitude_array[]=new double[5];
-    String name_array[]=new String[5];
-    int placeid_array[]=new int[5];
+    private ArrayList<Double> latitude=new ArrayList<Double>();
+    private ArrayList<Double> longitude=new ArrayList<Double>();
+    private ArrayList<String> name=new ArrayList<String>();
+    private ArrayList<Long> placeid=new ArrayList<Long>();
+    private TMapPoint tmp_array[];
+    int ret_size;   //intent로 넘겨받은 리스트들의 크기
 
     @Override
     public void onLocationChange(Location location) { //위치 변경 확인
@@ -58,76 +60,26 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             gpsLatitude = pointh.getLatitude();
             gpsLongitude = pointh.getLongitude();
             Intent secondIntent=getIntent();
-            double latitude0=secondIntent.getDoubleExtra("latitude0",0);
-            double longitude0=secondIntent.getDoubleExtra("longitude0",0);
-            String name0=secondIntent.getStringExtra("name0");
-            int placeid0= (int) secondIntent.getLongExtra("placeid0",0);
-            double latitude1=secondIntent.getDoubleExtra("latitude1",0);
-            double longitude1=secondIntent.getDoubleExtra("longitude1",0);
-            String name1=secondIntent.getStringExtra("name1");
-            int placeid1= (int) secondIntent.getLongExtra("placeid1",0);
-            double latitude2=secondIntent.getDoubleExtra("latitude2",0);
-            double longitude2= secondIntent.getDoubleExtra("longitude2",0);
-            String name2=secondIntent.getStringExtra("name2");
-            int placeid2= (int) secondIntent.getLongExtra("placeid2",0);
-            double latitude3=secondIntent.getDoubleExtra("latitude3",0);
-            double longitude3=secondIntent.getDoubleExtra("longitude3",0);
-            String name3=secondIntent.getStringExtra("name3");
-            int placeid3= (int) secondIntent.getLongExtra("placeid3",0);
-            double latitude4=secondIntent.getDoubleExtra("latitude4",0);
-            double longitude4=secondIntent.getDoubleExtra("longitude4",0);
-            String name4=secondIntent.getStringExtra("name4");
-            int placeid4= (int) secondIntent.getLongExtra("placeid4",0);
-
-            for(int i=0;i<5;i++)
-            {
-                if(i==0){
-                    latitude_array[i]=latitude0;
-                    longitude_array[i]=longitude0;
-                    name_array[i]=name0;
-                    placeid_array[i]=(int)placeid0;
-                }
-                if(i==1){
-                    latitude_array[i]=latitude1;
-                    longitude_array[i]=longitude1;
-                    name_array[i]=name1;
-                    placeid_array[i]=(int)placeid1;
-                }
-                if(i==2){
-                    latitude_array[i]=latitude2;
-                    longitude_array[i]=longitude2;
-                    name_array[i]=name2;
-                    placeid_array[i]=(int)placeid2;
-                }
-                if(i==3){
-                    latitude_array[i]=latitude3;
-                    longitude_array[i]=longitude3;
-                    name_array[i]=name3;
-                    placeid_array[i]=(int)placeid3;
-                }
-                if(i==4){
-                    latitude_array[i]=latitude4;
-                    longitude_array[i]=longitude4;
-                    name_array[i]=name4;
-                    placeid_array[i]=(int)placeid4;
-                }
-
+            ret_size=secondIntent.getIntExtra("size",0);
+            for(int i=0;i<ret_size;i++) {
+                latitude.add(secondIntent.getDoubleExtra("latitude"+i,0));
+                longitude.add(secondIntent.getDoubleExtra("longitude"+i,0));
+                name.add(secondIntent.getStringExtra("name"+i));
+                placeid.add(secondIntent.getLongExtra("placeid"+i,0));
             }
-
+        }
+            tmp_array=new TMapPoint[ret_size+1];
+            for(int i=0;i<ret_size;i++) {
+                tmp_array[i+1]= new TMapPoint(latitude.get(i),longitude.get(i));;
+            }
+            tmp_array[0]=new TMapPoint(gpsLatitude,gpsLongitude);
             FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView); // 다중 경로화 함수 선언
             // 다중 경로화
-            findCarPathTask.execute(new TMapPoint(gpsLatitude,gpsLongitude),
-                    new TMapPoint(latitude0,longitude0),
-                    new TMapPoint(latitude1,longitude1),
-                    new TMapPoint(latitude2,longitude2),
-                    new TMapPoint(latitude3,longitude3),
-                    new TMapPoint(latitude4,longitude4));
+            findCarPathTask.execute(tmp_array);
+
+        for(int i=0;i<ret_size;i++){
+            m_mapPoint.add(new MapPoint(new Integer(String.valueOf(placeid.get(i))),name.get(i),latitude.get(i),longitude.get(i)));
         }
-        m_mapPoint.add(new MapPoint(placeid_array[0], name_array[0], latitude_array[0], longitude_array[0]));
-        m_mapPoint.add(new MapPoint(placeid_array[1], name_array[1], latitude_array[1], longitude_array[1]));
-        m_mapPoint.add(new MapPoint(placeid_array[2], name_array[2], latitude_array[2], longitude_array[2]));
-        m_mapPoint.add(new MapPoint(placeid_array[3], name_array[3], latitude_array[3], longitude_array[3]));
-        m_mapPoint.add(new MapPoint(placeid_array[4], name_array[4], latitude_array[4], longitude_array[4]));
 
         for (int i = 0; i < m_mapPoint.size(); i++) {
             TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
@@ -146,7 +98,7 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
 
             //풍선뷰 안의 항목에 글을 지정
             item1.setCalloutTitle(markName);
-            item1.setCalloutSubTitle(String.valueOf(i+1));//서브 타이틀 지정
+            item1.setCalloutSubTitle(String.valueOf(i));//서브 타이틀 지정
 
             item1.setCanShowCallout(true);
             item1.setAutoCalloutVisible(true);
@@ -188,9 +140,7 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
                         .show();
             }
         });
-        for(int i=0;i<5;i++) {
-            Log.d("************", "place_id " + toString().valueOf(placeid_array[i]) + " name " + name_array[i] + " distance " + toString().valueOf(latitude_array[i]) + " longitude " + toString().valueOf(longitude_array[i]));
-        }
+
     }
 
     @Override
@@ -259,6 +209,5 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
             }
         });
     }
-    //
 
 }
