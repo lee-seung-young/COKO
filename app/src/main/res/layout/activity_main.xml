@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="바로 경로 추천"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="150dp"
             android:textSize="@android:dimen/app_icon_size" />
 
         <Button
@@ -37,21 +37,17 @@
             android:text="관광 정보 검색"
             android:textSize="@android:dimen/app_icon_size" />
 
+        <Button
+            android:id="@+id/button_likeslist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="찜목록"
+            android:layout_marginTop="50dp"
+            android:textSize="35dp"
+            />
+
+
     </LinearLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_map3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="주위 관광지 추천"-->
-<!--        android:textSize="@android:dimen/app_icon_size" />-->
-
-    <Button
-        android:id="@+id/button_likeslist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="찜하기 목록 보기"
-        android:textSize="25dp"
-        />
 
 </android.widget.RelativeLayout>

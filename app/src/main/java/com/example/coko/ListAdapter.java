@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -40,10 +39,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         this.arrayList = arrayList;
     }
 
-
-//    public ListAdapter(ArrayList<LikesInfo> arrayList){
-//        this.arrayList = arrayList;
-//    }
     @NonNull
     @Override
     public ListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,36 +54,34 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         holder.location.setText(arrayList.get(position).getLocation());
 
         database = FirebaseDatabase.getInstance();
-        String name = arrayList.get(position).getName();
-        Log.v("********numss1",name);
-//        String numss = arrayList.get(position).getPlace_id();
-//        Log.v("*****numss2", numss);
+
+        //리스트에서 받아오기
+        String place_num = arrayList.get(position).getPlace_id();
+        final String name = arrayList.get(position).getName();
+        String lat = arrayList.get(position).getLatitude();
+
         String likes = "likes";
-        final String addlikes = likes.concat(name);
+        String place = "place";
+        final String addlikes = likes.concat(place_num);
+        final String addplace = place.concat(place_num);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("찜목록 삭제")
-                        .setMessage("정말로 삭제하시겠습니까?")
+                        .setMessage(name+"을(를) 찜목록에서 정말로 삭제하시겠습니까?")
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                arrayList.remove(position);
+                                arrayList.remove(position); // 찜목록 화면에서 삭제
 
-//                                Log.d("******", String.valueOf(position));
-//                                int count =  position;
-//                                String addNum = "likes" + (position+1);
-//                                database.getReference().child("Likes").child(addNum).removeValue();
-                                database.getReference().child("Likes").child(addlikes).removeValue();
-//                                database.getReference().child("Place").child(placeId).child("likeox").setValue(false);
-//                                database.getReference().removeValue();
+                                database.getReference().child("Likes").child(addlikes).removeValue(); // 디비 Likes 항목에서 삭제
+                                database.getReference().child("Place").child(addplace).child("likeox").setValue(false); // 디비 Place에서 false로 변환
+
                                 notifyItemChanged(position);
-//                                notifyItemRangeChanged(0, arrayList.size());
-
                                 notifyItemRangeRemoved(0, arrayList.size());
                             }
                         });
@@ -100,21 +93,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 });
                 builder.show();
             }
-        });}
+        });
+    }
 
     @Override
     public int getItemCount() {
         return (arrayList != null ? arrayList.size() : 0);
     }
 
-
     public class ListViewHolder extends RecyclerView.ViewHolder {
 
         ImageView pic;
         TextView name;
         TextView location;
-
-//        LikesInfo info;
 
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
