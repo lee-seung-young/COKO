@@ -3,5 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="colorOrange">#ff7f00</color>
+    <color name="DarkOrange">#FF8000</color>
+    <color name="blue">#2E9AFE</color>
+    <color name="darkdarkOrange">#B45F04</color>
+    <color name="wight">#FFFFFF</color>
+
+
 </resources>
