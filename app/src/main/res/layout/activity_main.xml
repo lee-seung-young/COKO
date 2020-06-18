@@ -11,7 +11,7 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/appmark"/>
+        android:src="@drawable/appmarkk"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="바로 경로 추천"
+            android:textColor="@color/wight"
+            android:background="@color/colorPrimary"
             android:layout_marginTop="150dp"
             android:textSize="@android:dimen/app_icon_size" />
 
@@ -35,6 +37,8 @@
             android:layout_below="@+id/btn_map2"
             android:layout_marginTop="20dp"
             android:text="관광 정보 검색"
+            android:textColor="@color/wight"
+            android:background="@color/blue"
             android:textSize="@android:dimen/app_icon_size" />
 
         <Button
@@ -43,11 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="찜목록"
+            android:background="@color/DarkOrange"
             android:layout_marginTop="50dp"
             android:textSize="35dp"
             />
 
-
     </LinearLayout>
-
+    
 </android.widget.RelativeLayout>
