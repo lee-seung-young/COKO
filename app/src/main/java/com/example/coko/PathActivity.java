@@ -56,26 +56,84 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
     public void onLocationChange(Location location) { //위치 변경 확인
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-            TMapPoint pointh = tMapView.getLocationPoint();
-            gpsLatitude = pointh.getLatitude();
-            gpsLongitude = pointh.getLongitude();
-            Intent secondIntent=getIntent();
-            ret_size=secondIntent.getIntExtra("size",0);
-            for(int i=0;i<ret_size;i++) {
-                latitude.add(secondIntent.getDoubleExtra("latitude"+i,0));
-                longitude.add(secondIntent.getDoubleExtra("longitude"+i,0));
-                name.add(secondIntent.getStringExtra("name"+i));
-                placeid.add(secondIntent.getLongExtra("placeid"+i,0));
-            }
         }
-            tmp_array=new TMapPoint[ret_size+1];
-            for(int i=0;i<ret_size;i++) {
-                tmp_array[i+1]= new TMapPoint(latitude.get(i),longitude.get(i));;
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_path);
+
+        mContext = this;
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mapview);
+        tMapView = new TMapView(this);
+        linearLayout.addView(tMapView);
+        tMapView.setSKTMapApiKey(mApiKey);
+
+        /*현위치 아이콘표시*/
+        tMapView.setIconVisibility(true);
+
+        /*줌레벨*/
+        tMapView.setZoomLevel(13);
+        tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
+        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
+
+        tmapgps = new TMapGpsManager(PathActivity.this);
+        tmapgps.setMinTime(0);
+        tmapgps.setMinDistance(5);
+        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
+        tmapgps.OpenGps();
+
+        /*현재위치 좌표 intent로 받음*/
+        Intent secondIntent=getIntent();
+        gpsLatitude=secondIntent.getDoubleExtra("present_latitude",0);
+        gpsLongitude=secondIntent.getDoubleExtra("present_longitude",0);
+        Log.d("********","present_latitude" + toString().valueOf(gpsLatitude));
+        ret_size=secondIntent.getIntExtra("size",0);
+        for(int i=0;i<ret_size;i++) {
+            latitude.add(secondIntent.getDoubleExtra("latitude"+i,0));
+            longitude.add(secondIntent.getDoubleExtra("longitude"+i,0));
+            name.add(secondIntent.getStringExtra("name"+i));
+            placeid.add(secondIntent.getLongExtra("placeid"+i,0));
+        }
+
+        /*화면중심을 단말의 현재위치로 이동*/
+        tMapView.setTrackingMode(true);
+        tMapView.setSightVisible(true);
+
+        // 맵 화면 버튼 3가지 구성
+        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
+        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomIn();
             }
-            tmp_array[0]=new TMapPoint(gpsLatitude,gpsLongitude);
-            FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView); // 다중 경로화 함수 선언
-            // 다중 경로화
-            findCarPathTask.execute(tmp_array);
+        });
+        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut); // 축소 버튼
+        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.MapZoomOut();
+            }
+        });
+        Button buttongps = (Button)findViewById(R.id.buttongps); // 현재위치로 화면을 옮기는 버튼
+        buttongps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
+            }
+        });
+
+        tmp_array=new TMapPoint[ret_size+1];
+        for(int i=0;i<ret_size;i++) {
+            tmp_array[i+1]= new TMapPoint(latitude.get(i),longitude.get(i));;
+        }
+        tmp_array[0]=new TMapPoint(gpsLatitude,gpsLongitude);
+        FindCarPathTask findCarPathTask = new FindCarPathTask(getApplicationContext(),tMapView); // 다중 경로화 함수 선언
+        // 다중 경로화
+        findCarPathTask.execute(tmp_array);
 
         for(int i=0;i<ret_size;i++){
             m_mapPoint.add(new MapPoint(new Integer(String.valueOf(placeid.get(i))),name.get(i),latitude.get(i),longitude.get(i)));
@@ -140,63 +198,6 @@ public class PathActivity extends AppCompatActivity implements TMapGpsManager.on
                         .show();
             }
         });
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_path);
-
-        mContext = this;
-
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.mapview);
-        tMapView = new TMapView(this);
-        linearLayout.addView(tMapView);
-        tMapView.setSKTMapApiKey(mApiKey);
-
-        /*현위치 아이콘표시*/
-        tMapView.setIconVisibility(true);
-
-        /*줌레벨*/
-        tMapView.setZoomLevel(13);
-        tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
-        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
-
-        tmapgps = new TMapGpsManager(PathActivity.this);
-        tmapgps.setMinTime(0);
-        tmapgps.setMinDistance(5);
-        tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); //연결된 인터넷으로 현 위치를 받습니다.
-        tmapgps.OpenGps();
-
-
-        /*화면중심을 단말의 현재위치로 이동*/
-        tMapView.setTrackingMode(true);
-        tMapView.setSightVisible(true);
-
-        // 맵 화면 버튼 3가지 구성
-        Button buttonZoomIn = (Button)findViewById(R.id.buttonZoomIn); // 확대 버튼
-        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.MapZoomIn();
-            }
-        });
-        Button buttonZoomOut = (Button)findViewById(R.id.buttonZoomOut); // 축소 버튼
-        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.MapZoomOut();
-            }
-        });
-        Button buttongps = (Button)findViewById(R.id.buttongps); // 현재위치로 화면을 옮기는 버튼
-        buttongps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tMapView.setCenterPoint(gpsLongitude, gpsLatitude,true);
-            }
-        });
-
     }
 
     /*차로가는 경로 보여주는 함수*/

@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent2 = new Intent(MainActivity.this, PathActivity.class);
+                        intent2.putExtra("present_latitude",latitude);
+                        intent2.putExtra("present_longitude",longitude);
 
                         for(int i=0;i<list.size();i++){
                             intent2.putExtra("latitude"+i,list.get(i).getLatitude());
