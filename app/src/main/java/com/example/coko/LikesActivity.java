@@ -93,6 +93,8 @@ LikesActivity extends AppCompatActivity  {
                 Log.d("************","name "+toString().valueOf(list.get(i).getName())+" distance "+toString().valueOf(list.get(i).getDistance()));
 
                 Intent intent2 = new Intent(LikesActivity.this, PathActivity.class);
+                intent2.putExtra("present_latitude",latitude);
+                intent2.putExtra("present_longitude",longitude);
                 for(int i=0;i<list.size();i++){
                     intent2.putExtra("latitude"+i,list.get(i).getLatitude());
                     intent2.putExtra("longitude"+i,list.get(i).getLongitude());
